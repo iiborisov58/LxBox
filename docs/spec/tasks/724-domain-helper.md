@@ -60,12 +60,24 @@
 - Учёт пресетов в покрытии.
 - Создание правила целиком (помощник наполняет поля редактора).
 
+## Решения по ходу
+
+- Проверка TLD в тексте — `isListedTld` (явное правило PSL), не
+  `isPublicSuffix`: у последнего правило по умолчанию `*` пропускает любой
+  TLD (`index-v2.json`). Правила PSL при разборе приводятся к punycode.
+- Экран: прокси-тег — `ReachabilityMonitor` хранит `ReachabilityHost`
+  (`tunnelConnected`, `routeFinalTag`) приватно; для экрана добавить геттер.
+- Результат экрана — домены/суффиксы, дописываются в `domainCtrl` /
+  `domainSuffixCtrl` MatchSection (через колбэк из params_tab), без дублей.
+
 ## Progress
 
-- [ ] PSL: `lib/services/domain_helper/public_suffix.dart` + тест
-- [ ] Кандидаты: извлечение из текста, из профайлера, группировка + тест
-- [ ] Покрытие своими правилами + тест
-- [ ] Проба выхода + тест
+- [x] PSL: `lib/services/domain_helper/public_suffix.dart` + тест
+- [x] Кандидаты: извлечение из текста, из профайлера, группировка + тест
+- [x] Покрытие своими правилами (`rule_coverage.dart`) + тест
+- [x] Проба выхода (`exit_probe.dart`) + тест — `test/services/domain_helper/`, 10 тестов
+- [ ] IDN: `normalizeHost('пример.рф')` возвращает null (punycode есть, но
+      `isValidDomain` не пропускает результат?) — разобраться, вернуть ассерт в тест
 - [ ] Экран `lib/screens/domain_helper_screen.dart` + кнопка в `match_section.dart`
 - [ ] l10n ru/zh, проверки, доки 004 inline-rules
 - [ ] Влить в `nightly/2026-11-05`, собрать release
