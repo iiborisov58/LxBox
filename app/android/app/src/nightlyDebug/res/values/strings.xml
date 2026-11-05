@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Nightly debug (LXBOX_NIGHTLY=1, flutter build apk с debug): своё имя, чтобы отличать от
+     nightly release. Каталог подключается build.gradle.kts к source set debug
+     поверх src/nightly/res (иконка) и перекрывает main. -->
+<resources>
+    <string name="app_name" translatable="false">L×Box Nightly Debug</string>
+</resources>

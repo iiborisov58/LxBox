@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Nightly release (LXBOX_NIGHTLY=1, flutter build apk с release): своё имя рядом с основной
+     установкой. Каталог подключается build.gradle.kts к source set release
+     поверх src/nightly/res (иконка) и перекрывает main. -->
+<resources>
+    <string name="app_name" translatable="false">L×Box Nightly</string>
+</resources>

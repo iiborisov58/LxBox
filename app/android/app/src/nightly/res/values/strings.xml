@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!-- Nightly-сборка (LXBOX_NIGHTLY=1, только debug): своё имя рядом с основной
-     установкой. Ресурсы каталога подключаются build.gradle.kts к source set
-     debug и перекрывают main. -->
-<resources>
-    <string name="app_name" translatable="false">L×Box Nightly</string>
-</resources>
