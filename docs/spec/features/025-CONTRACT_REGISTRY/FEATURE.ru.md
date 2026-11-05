@@ -136,6 +136,12 @@ LxBox проверяет каждый VPN-узел — от share-ссылки V
 `dialer`, `limits`, `multiplex`, `presets`, `source_kinds`, `tls`, `transports`, `vars`,
 `warnings`; `registry/protocols/` — по файлу на схему.
 
+Черновик реестра: `assets/contract_draft/rule_set_sources.json` (§723, источники `.srs` для поиска
+наборов) — в форме записи `registry/`, но в контракте лаунчера его пока нет, поэтому в зеркало
+и копию он не кладётся (`check_contract_lock` сверяет их с lock). Загрузчик берёт
+`registry/rule_set_sources.json`, если тот приехал бампом, и только иначе — черновик;
+`rule_set_sources_test.dart` требует, чтобы файл был ровно в одном месте.
+
 | Схема | `type` ядра | Вид | Откуда принимается |
 |---|---|---|---|
 | `anytls` | `anytls` | outbound | ссылка, sing-box JSON |

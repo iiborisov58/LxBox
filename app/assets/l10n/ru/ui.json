@@ -7079,5 +7079,83 @@
   },
   "%d h": {
     "value": "%d ч"
+  },
+  "Mixed": {
+    "value": "Смешанный"
+  },
+  "Find rule set": {
+    "value": "Найти набор правил"
+  },
+  "Refresh list": {
+    "value": "Обновить список"
+  },
+  "Name, e.g. youtube or ru-blocked": {
+    "value": "Имя, например youtube или ru-blocked"
+  },
+  "%1$s: list unavailable (%2$s)": {
+    "value": "%1$s: список недоступен (%2$s)"
+  },
+  "Shown %1$d of %2$d": {
+    "value": "Показано %1$d из %2$d"
+  },
+  "Found: %d": {
+    "value": "Найдено: %d"
+  },
+  "list from %s": {
+    "value": "список от: %s"
+  },
+  "Nothing found": {
+    "value": "Ничего не найдено"
+  },
+  "Not a valid rule set: %s": {
+    "value": "Это не набор правил sing-box: %s"
+  },
+  "Download failed: %s": {
+    "value": "Не удалось скачать: %s"
+  },
+  "Not found in this file": {
+    "value": "В этом файле не найдено"
+  },
+  "Found: domain %s": {
+    "value": "Найдено: домен %s"
+  },
+  "Found: domain suffix %s": {
+    "value": "Найдено: суффикс домена %s"
+  },
+  "Found: keyword %s": {
+    "value": "Найдено: ключевое слово %s"
+  },
+  "Found: regex %s": {
+    "value": "Найдено: регулярное выражение %s"
+  },
+  "Found: IP range %s": {
+    "value": "Найдено: диапазон IP %s"
+  },
+  "Check file": {
+    "value": "Проверить файл"
+  },
+  "Use": {
+    "value": "Использовать"
+  },
+  "Domains: %d": {
+    "value": "Доменов: %d"
+  },
+  "Domain suffixes: %d": {
+    "value": "Суффиксов доменов: %d"
+  },
+  "Keywords: %d": {
+    "value": "Ключевых слов: %d"
+  },
+  "Regex: %d": {
+    "value": "Регулярных выражений: %d"
+  },
+  "IPv4 ranges: %d": {
+    "value": "Диапазонов IPv4: %d"
+  },
+  "IPv6 ranges: %d": {
+    "value": "Диапазонов IPv6: %d"
+  },
+  "Domain or IP": {
+    "value": "Домен или IP"
   }
 }

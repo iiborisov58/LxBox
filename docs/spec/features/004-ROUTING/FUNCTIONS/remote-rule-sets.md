@@ -31,8 +31,16 @@ a local path; the core itself does not go to the network for lists.
 Actions: ☁ in the rule row — download/re-download (✅ — everything is in the cache,
 a spinner — a download is running); a long tap on a preset's ☁ — "Refresh rule-sets" and
 "Clear cached files"; in the editor — "Update now", "Refresh SRS", "Clear
-cached file", "Copy URL", "Paste" and the line "Updated … / last attempt
-error".
+cached file", "Copy URL", "Paste", "Find rule set" and the line "Updated … /
+last attempt error".
+
+**Find rule set** (§723) searches ready-made `.srs` files across the sources in the
+contract registry (`rule_set_sources.json`, a draft in `assets/contract_draft/` for now: runetfreedom, SagerNet
+sing-geosite/sing-geoip, MetaCubeX, legiz-ru). The file list comes from the GitHub
+API per directory (jsDelivr as a fallback where the registry allows it), is cached
+for 24 h and refreshed by a button. Filters: source and kind (geosite / geoip). The
+file card: mirror (GitHub raw / jsDelivr), "Check file" downloads it and shows its
+contents, then checks a domain or IP; "Use" appends the URL to the field.
 
 ## Inputs / Outputs
 
@@ -78,10 +86,17 @@ per set and one route rule with the list of tags.
   A changed file triggers a config rebuild. A manual "Update now"
   re-downloads unconditionally.
 - The DNS option of an `.srs` rule works only if the set contains domains.
+- **The set finder goes online only on a user action** (§395): the list when the
+  finder opens and the cache is older than its TTL, or on "Refresh"; the file on
+  "Check file". The check does not put the file into the rule's cache.
+- Domain check matching follows the core: `domain` exact, `domain_suffix` without a
+  dot — the domain and its subdomains at a label boundary, with a dot — subdomains
+  only, `domain_keyword` — substring, `domain_regex` — RegExp, `ip_cidr` — range.
 
 ## Boundaries
 
-- The contents of `.srs` are neither parsed nor shown.
+- The build does not parse `.srs` contents; only the set finder check (§723) and
+  the reachability check (§721) do.
 - The cache is not part of the backup; after a restore, sets are downloaded
   again.
 - There is not and will not be a background timer update (battery).
@@ -98,3 +113,4 @@ per set and one route rule with the list of tags.
 | 6 | [531](../../../tasks/531-ru-app-list-ruleset-in-ru-preset.md) | Done | The set of Russian apps in Ru internet segment |
 | 7 | [534](../../../tasks/534-rule-set-enable-gate-download-path.md) | Done | The set gate is the same for download, the screen and the build |
 | 8 | [601](../../../tasks/601-routing-missing-srs-keeps-enabled.md) | Done | The screen does not turn off a rule without a downloaded set |
+| 9 | [723](../../../tasks/723-rule-set-finder.md) | Code-complete | Search for ready-made sets across the source registry, file and domain check |
