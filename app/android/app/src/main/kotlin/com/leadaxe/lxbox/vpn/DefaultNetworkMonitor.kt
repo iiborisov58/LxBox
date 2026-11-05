@@ -44,6 +44,8 @@ object DefaultNetworkMonitor {
     /// boot-race — состояние VALIDATED, под которое запланирован текущий
     /// начальный reset (null — не запланирован). Не даёт churn'у
     /// onCapabilitiesChanged (уровень сигнала и т.п.) бесконечно переносить таймер.
+    /// `@Volatile`: пишется из корутины reset'а, читается из колбэков сети.
+    @Volatile
     private var pendingInitialValidated: Boolean? = null
 
     suspend fun start(scope: CoroutineScope, onNetworkSwitch: () -> Unit) {
