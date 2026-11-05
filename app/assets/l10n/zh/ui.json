@@ -2651,7 +2651,7 @@
     "value": "工作原理：方向、规则、DNS、detour、示例"
   },
   "INBOUND": {
-    "value": "INBOUND"
+    "value": "入站"
   },
   "IP": {
     "value": "IP"
@@ -3422,7 +3422,7 @@
     "value": "此节点无法以链接形式分享。"
   },
   "down": {
-    "value": "down"
+    "value": "断开"
   },
   "Layout": {
     "value": "布局"
@@ -3437,7 +3437,7 @@
     "value": "窗口宽度不小于 600 dp 时（平板、横屏、分屏），节点列表以双栏显示。"
   },
   "sleep": {
-    "value": "sleep"
+    "value": "休眠"
   },
   "Tile added to Quick Settings.": {
     "value": "磁贴已添加到快捷设置。"
@@ -3455,7 +3455,7 @@
     "value": "未知错误"
   },
   "up": {
-    "value": "up"
+    "value": "在线"
   },
   "Node \"%1$s\" was dropped: its relay \"%2$s\" is missing, unusable or loops. Connecting directly would have bypassed the relay.": {
     "value": "节点「%1$s」已丢弃：它的 relay「%2$s」缺失、不可用或成环。直连会绕过 relay。"
@@ -4628,7 +4628,7 @@
     "value": "启动 VPN 才能测量该链路——它的各跳只存在于运行中的内核里。"
   },
   "Start timed out after %1$d s (post-start did not finish, %2$d endpoints)": {
-    "value": "Start timed out after %1$d s (post-start did not finish, %2$d endpoints)"
+    "value": "启动在 %1$d 秒后超时（post-start 未完成，endpoint 数：%2$d）"
   },
   "State": {
     "value": "状态"
@@ -4646,7 +4646,12 @@
     "value": "会话保持依据"
   },
   "Stop": {
-    "value": "停止"
+    "value": "停止",
+    "special": {
+      "1": {
+        "value": "停止"
+      }
+    }
   },
   "Stop VPN": {
     "value": "停止 VPN"
@@ -4810,7 +4815,7 @@
     "value": "已被其它 VPN 占用"
   },
   "Tap START to begin capture. Recording continues when you leave this tab.": {
-    "value": "点 START 开始抓取。离开本页后录制仍会继续。"
+    "value": "点“启动”开始抓取。离开本页后录制仍会继续。"
   },
   "Tap Start to begin": {
     "value": "点「开始测试」即可开始"
@@ -5668,7 +5673,7 @@
     "value": "≤%dms"
   },
   "off": {
-    "value": "off"
+    "value": "关闭"
   },
   "Turn on": {
     "value": "开启"
@@ -6700,5 +6705,20 @@
   },
   "Appears only while a Tailscale node has Allow Taildrop.": {
     "value": "仅当 Tailscale 节点启用 Allow Taildrop 时显示。"
+  },
+  "%1$s · idle for %2$d s": {
+    "value": "%1$s · 空闲 %2$d 秒"
+  },
+  "Direct": {
+    "value": "直连"
+  },
+  "%d s": {
+    "value": "%d 秒"
+  },
+  "%d min": {
+    "value": "%d 分钟"
+  },
+  "%d h": {
+    "value": "%d 小时"
   }
 }

@@ -164,7 +164,7 @@ class _SpeedTestScreenState extends State<SpeedTestScreen>
 
   /// Значение для истории: `Direct` без VPN, outbound из ядра, пусто — неизвестно.
   String get _routeForHistory {
-    if (!_vpnEnabled) return 'Direct'; // l10n-exempt: outbound tag-like label
+    if (!_vpnEnabled) return getLocalText.s("Direct");
     return _observedRoute ?? '';
   }
 
