@@ -13,6 +13,8 @@ import '../sections/port_section.dart';
 import '../sections/srs_section.dart';
 import '../sections/wifi_section.dart';
 import 'preset_params_tab.dart';
+import '../normalizers.dart' as norm;
+import '../../domain_helper_screen.dart';
 import '../../../services/l10n/locale_controller.dart';
 
 /// §053 Stage 3 — Params tab для inline/srs ветки.
@@ -29,6 +31,27 @@ class ParamsTab extends StatelessWidget {
 
   final List<OutboundOption> outboundOptions;
   final ParamsTabActions actions;
+
+  /// §724 — помощник доменов: выбранное дописывается в Domain / Domain
+  /// suffix без дублей; выход правила выбирается здесь же, как обычно.
+  Future<void> _pickDomains(BuildContext context) async {
+    final c = CustomRuleEditScope.of(context);
+    final r = await Navigator.of(context).push<DomainHelperResult>(
+      MaterialPageRoute(
+        builder: (_) => DomainHelperScreen(excludeRuleId: c.initial.id),
+      ),
+    );
+    if (r == null) return;
+    void merge(TextEditingController ctrl, List<String> add) {
+      if (add.isEmpty) return;
+      final have = norm.splitRaw(ctrl.text);
+      final next = [...have, ...add.where((x) => !have.contains(x))];
+      ctrl.text = next.join('\n');
+    }
+
+    merge(c.domainSuffixCtrl, r.suffixes);
+    merge(c.domainCtrl, r.domains);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -156,6 +179,7 @@ class ParamsTab extends StatelessWidget {
             sourceIpCidrCtrl: c.sourceIpCidrCtrl,
             sourceIpIsPrivate: c.sourceIpIsPrivate,
             onSourceIpIsPrivateChanged: c.setSourceIpIsPrivate,
+            onPickDomains: () => _pickDomains(context),
           ),
         if (c.kind == CustomRuleKind.srs)
           SrsSection(

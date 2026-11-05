@@ -6849,5 +6849,107 @@
   },
   "Domain or IP": {
     "value": "域名或 IP"
+  },
+  "Profiler is already recording": {
+    "value": "分析器已在录制"
+  },
+  "Use the events of the current recording, or start a new one? A new recording clears the profiler log.": {
+    "value": "使用当前录制的事件，还是重新开始？重新录制会清空分析器日志。"
+  },
+  "Start over": {
+    "value": "重新开始"
+  },
+  "Use current": {
+    "value": "使用当前"
+  },
+  "Paste text with domains": {
+    "value": "粘贴含域名的文本"
+  },
+  "A list, links or any text: domains are picked out of it": {
+    "value": "列表、链接或任意文本：将从中提取域名"
+  },
+  "Extract": {
+    "value": "提取"
+  },
+  "No domains found in the text": {
+    "value": "文本中未找到域名"
+  },
+  "recorded": {
+    "value": "已录制"
+  },
+  "from text": {
+    "value": "来自文本"
+  },
+  "from rule set": {
+    "value": "来自规则集"
+  },
+  "Works direct": {
+    "value": "直连可用"
+  },
+  "Only via proxy": {
+    "value": "仅可通过代理"
+  },
+  "No response": {
+    "value": "无响应"
+  },
+  "Pick domains": {
+    "value": "选取域名"
+  },
+  "Add (%d)": {
+    "value": "添加（%d）"
+  },
+  "Record app": {
+    "value": "录制应用"
+  },
+  "Paste text": {
+    "value": "粘贴文本"
+  },
+  "From rule set": {
+    "value": "来自规则集"
+  },
+  "Connections without a domain (IP only): %d — a domain rule will not catch them": {
+    "value": "无域名的连接（仅 IP）：%d —— 域名规则无法匹配它们"
+  },
+  "Not downloaded, not checked: %s": {
+    "value": "未下载，未检查：%s"
+  },
+  "Groups: %d": {
+    "value": "分组：%d"
+  },
+  "Check exits": {
+    "value": "检查出口"
+  },
+  "Exit check needs the VPN to be connected": {
+    "value": "检查出口需要已连接 VPN"
+  },
+  "Record an app, paste a list or take a rule set — the helper will fold the domains into rule entries and show which of your rules already match them.": {
+    "value": "录制应用、粘贴列表或选取规则集——助手会把域名归并为规则条目，并显示哪些现有规则已匹配它们。"
+  },
+  "Recording: %s": {
+    "value": "录制中：%s"
+  },
+  "Switch to the app, do what should work (update, download, sign in), then come back and tap Done.": {
+    "value": "切换到该应用，执行需要正常工作的操作（更新、下载、登录），然后返回并点击“完成”。"
+  },
+  "VPN is not connected — nothing will be recorded.": {
+    "value": "VPN 未连接——不会录制任何内容。"
+  },
+  "Domains so far: %1$d · IP only: %2$d": {
+    "value": "域名：%1$d · 仅 IP：%2$d"
+  },
+  "connections: %d": {
+    "value": "连接：%d"
+  },
+  "suffix %s": {
+    "value": "后缀 %s"
+  },
+  "Already matched by rule «%1$s» → %2$s": {
+    "value": "已被规则“%1$s”匹配 → %2$s"
+  },
+  "Suffix": {
+    "value": "后缀"
+  },
+  "Exact": {
+    "value": "精确"
   }
 }

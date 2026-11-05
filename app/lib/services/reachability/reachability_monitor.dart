@@ -257,6 +257,9 @@ class ReachabilityMonitor extends ChangeNotifier {
 
   void bind(ReachabilityHost host) => _host = host;
 
+  /// §724 — привязанный хост (туннель, `route.final`) для помощника доменов.
+  ReachabilityHost? get host => _host;
+
   /// Старт приложения: подтянуть настройки.
   Future<void> init() async {
     _settings = await ReachabilitySettings.load();

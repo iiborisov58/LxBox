@@ -2,7 +2,7 @@
 
 | Field | Value |
 |-------|-------|
-| Status | In progress |
+| Status | Code-complete (ждёт ручной проверки на устройстве) |
 | Start date | 2026-11-05 |
 | End date | — |
 | Commits | ветка `feat/domain-helper` (от `feat/srs-finder`: переиспользует каталог 723 и `readSrs`/`SrsIndex`) |
@@ -70,14 +70,21 @@
 - Результат экрана — домены/суффиксы, дописываются в `domainCtrl` /
   `domainSuffixCtrl` MatchSection (через колбэк из params_tab), без дублей.
 
+- Диалог вставки текста — свой StatefulWidget: контроллер, уничтоженный сразу
+  после `showDialog`, падал на анимации закрытия (поймал виджет-тест).
+- Проверка выхода — не больше 30 выбранных групп за раз, по 4 параллельно.
+
 ## Progress
 
 - [x] PSL: `lib/services/domain_helper/public_suffix.dart` + тест
 - [x] Кандидаты: извлечение из текста, из профайлера, группировка + тест
 - [x] Покрытие своими правилами (`rule_coverage.dart`) + тест
 - [x] Проба выхода (`exit_probe.dart`) + тест — `test/services/domain_helper/`, 10 тестов
-- [ ] IDN: `normalizeHost('пример.рф')` возвращает null (punycode есть, но
-      `isValidDomain` не пропускает результат?) — разобраться, вернуть ассерт в тест
-- [ ] Экран `lib/screens/domain_helper_screen.dart` + кнопка в `match_section.dart`
-- [ ] l10n ru/zh, проверки, доки 004 inline-rules
+- [x] IDN: `normalizeHost('пример.рф')` → null. Причина — валидатор полей
+      правила `isValidDomain` требует буквенный TLD (`[a-zA-Z]{2,}`), а
+      `xn--p1ai` его не проходит: поле редактора отвергло бы такой домен так же.
+      Помощник согласован с полем; чинить валидатор — отдельная задача.
+- [x] Экран `lib/screens/domain_helper_screen.dart` + кнопка в `match_section.dart`
+      (колбэк из `params_tab.dart`), виджет-тест `test/screens/domain_helper_screen_test.dart`
+- [x] l10n ru/zh, проверки, доки 004 inline-rules
 - [ ] Влить в `nightly/2026-11-05`, собрать release

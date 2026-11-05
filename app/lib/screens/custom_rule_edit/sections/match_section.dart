@@ -35,7 +35,11 @@ class MatchSection extends StatelessWidget {
     required this.sourceIpCidrCtrl,
     required this.sourceIpIsPrivate,
     required this.onSourceIpIsPrivateChanged,
+    this.onPickDomains,
   });
+
+  /// §724 — открыть помощник подбора доменов. Null — кнопки нет.
+  final VoidCallback? onPickDomains;
 
   final TextEditingController domainCtrl;
   final TextEditingController domainSuffixCtrl;
@@ -62,6 +66,16 @@ class MatchSection extends StatelessWidget {
           title: 'MATCH',
           hint: 'Fields work in parallel (OR — any match wins).',
         ),
+        if (onPickDomains != null)
+          Align(
+            alignment: Alignment.centerLeft,
+            child: TextButton.icon(
+              icon: const Icon(Icons.auto_fix_high, size: 16),
+              label: Text(getLocalText.s("Pick domains"),
+                  style: const TextStyle(fontSize: 13)),
+              onPressed: onPickDomains,
+            ),
+          ),
         ItemsField(
           label: 'Domain (exact)',
           controller: domainCtrl,

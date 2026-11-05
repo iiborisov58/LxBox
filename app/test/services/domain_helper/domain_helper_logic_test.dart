@@ -45,6 +45,10 @@ void main() {
       expect(normalizeHost('*.example.com.'), 'example.com');
       expect(normalizeHost('.example.com'), 'example.com');
       expect(normalizeHost('example.com:443'), 'example.com');
+      // IDN-TLD (`xn--p1ai`) не проходит валидатор полей правила — помощник
+      // согласован с полем (spec 724).
+      expect(normalizeHost('пример.рф'), isNull);
+      expect(normalizeHost('пример.com'), 'xn--e1afmkfd.com');
       expect(normalizeHost('1.2.3.4'), isNull);
       expect(normalizeHost('localhost'), isNull);
     });
