@@ -41,6 +41,8 @@ Events (prefix `com.leadaxe.lxbox.event.`):
 | `ACTIVE_GROUP_CHANGED` | `old_group`, `new_group`, `reason` | State | a different group was selected |
 | `SUB_REFRESHED` | `sub_id`, `nodes_count`, `delta_count` | Subscription | a subscription was updated |
 | `SUB_REFRESH_FAILED` | `sub_id`, `error` | Subscription | a subscription failed to update or yielded 0 nodes |
+| `REACHABILITY_FAILED` | `checked`, `action` (`notify`/`resetNetwork`/`reconnect`/`none`) | Health | A blocked-sites check through the tunnel failed: none of `checked` sites responded |
+| `REACHABILITY_RESTORED` | `checked`, `reachable` | Health | The first successful blocked-sites check after a failure |
 
 ## Inputs / Outputs
 
@@ -80,8 +82,9 @@ subscription update results; the update check; command failures.
 - A node change by the group's automation (URL test, fallback) yields no
   event — only an explicit selection does.
 - Health (`HEARTBEAT_FAILED`, `LATENCY_DEGRADED`, `UNATTRIBUTED_BURST`) and
-  `PERMISSION_NEEDED` — reserved, there is no source; the Health category
-  has no toggle.
+  `PERMISSION_NEEDED` — reserved, there is no source. The Health toggle
+  gates `REACHABILITY_*` from the blocked-sites check (§721); their extras are
+  counts and the action name, no hosts or addresses.
 - Events are sent by the app UI; while it is not loaded, events do not go out,
   even if the tunnel changes status.
 - Depends on OS capabilities: delivery of broadcast events to the subscriber.
@@ -98,3 +101,4 @@ subscription update results; the update check; command failures.
 | 6 | [290](../../../tasks/290-automation-node-switch-gaps.md) | complete | `NODE_ALREADY_ACTIVE`, `VPN_ERROR` on command failure, the "enable both categories" hint |
 | 7 | [605](../../../tasks/605-service-live-automation-workspaces-bugs.md) | Implemented | The dead Health toggle removed; `switch_failed` code |
 | 8 | [638](../../../tasks/638-audit-591-four-defects.md) | Done | `VPN_ERROR(tunnel_error)` masks addresses in `message` (P14) |
+| 9 | [721](../../../tasks/721-blocked-reachability-check.md) | Implemented | `REACHABILITY_FAILED` / `REACHABILITY_RESTORED` — the first Health source; the Health toggle is back |

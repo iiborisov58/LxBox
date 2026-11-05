@@ -6,6 +6,7 @@ import '../widgets/section_header.dart';
 import '../../../models/custom_rule.dart'
     show kDefaultSrsTtlHours, kSrsTtlChoicesHours, parseSrsUrlsText;
 import '../../../services/l10n/locale_controller.dart';
+import '../../rule_set_finder_screen.dart';
 
 /// §053 Stage 2 — состояние ☁ кнопки рядом с SRS URL.
 /// Public (раньше был private `_SrsDownloadState`).
@@ -75,18 +76,30 @@ class _SrsSectionState extends State<SrsSection> {
     widget.onUrlChanged();
   }
 
+  /// §723 — выбранный в поиске URL: пустое поле заменяется, иначе URL
+  /// дописывается строкой (## 12 — по одному на строку); дубликат не пишется.
+  Future<void> _findRuleSet() async {
+    final url = await Navigator.of(context).push<String>(
+      MaterialPageRoute(builder: (_) => const RuleSetFinderScreen()),
+    );
+    if (url == null || !mounted) return;
+    final current = parseSrsUrlsText(widget.urlCtrl.text);
+    if (current.contains(url)) return;
+    widget.urlCtrl.text = [...current, url].join('\n');
+  }
+
   /// §366 — подпись варианта TTL. Набор вшит ([kSrsTtlChoicesHours]),
   /// поэтому обходимся switch'ем без арифметики над часами.
   String _ttlLabel(int hours) => switch (hours) {
-        0 => getLocalText.s("Never"),
-        24 => getLocalText.s("Every day"),
-        168 => getLocalText.s("Every week"),
-        336 => getLocalText.s("Every 2 weeks"),
-        720 => getLocalText.s("Every month"),
-        4320 => getLocalText.s("Every 6 months"),
-        8760 => getLocalText.s("Every year"),
-        _ => getLocalText.s("Every %d h", hours),
-      };
+    0 => getLocalText.s("Never"),
+    24 => getLocalText.s("Every day"),
+    168 => getLocalText.s("Every week"),
+    336 => getLocalText.s("Every 2 weeks"),
+    720 => getLocalText.s("Every month"),
+    4320 => getLocalText.s("Every 6 months"),
+    8760 => getLocalText.s("Every year"),
+    _ => getLocalText.s("Every %d h", hours),
+  };
 
   @override
   Widget build(BuildContext context) {
@@ -111,14 +124,15 @@ class _SrsSectionState extends State<SrsSection> {
       );
     } else {
       final (IconData icon, Color color) = switch (widget.state) {
-        SrsDownloadState.cached =>
-          (Icons.cloud_done_outlined, Colors.green),
-        SrsDownloadState.error =>
-          (Icons.cloud_off_outlined, t.colorScheme.error),
+        SrsDownloadState.cached => (Icons.cloud_done_outlined, Colors.green),
+        SrsDownloadState.error => (
+          Icons.cloud_off_outlined,
+          t.colorScheme.error,
+        ),
         SrsDownloadState.none || SrsDownloadState.loading => (
-            Icons.cloud_download_outlined,
-            t.colorScheme.onSurfaceVariant
-          ),
+          Icons.cloud_download_outlined,
+          t.colorScheme.onSurfaceVariant,
+        ),
       };
       cloud = GestureDetector(
         onTap: urlValid ? widget.onDownload : null,
@@ -138,7 +152,8 @@ class _SrsSectionState extends State<SrsSection> {
       children: [
         const SectionHeader(
           title: 'RULE-SET URL',
-          hint: 'Manual download only. Tap ☁ to fetch the .srs file '
+          hint:
+              'Manual download only. Tap ☁ to fetch the .srs file '
               'locally.',
         ),
         TextField(
@@ -162,9 +177,7 @@ class _SrsSectionState extends State<SrsSection> {
                 final copied = getLocalText.s("URL copied");
                 await Clipboard.setData(ClipboardData(text: text));
                 if (!mounted) return;
-                messenger.showSnackBar(
-                  SnackBar(content: Text(copied)),
-                );
+                messenger.showSnackBar(SnackBar(content: Text(copied)));
               },
             ),
             suffixIcon: Padding(
@@ -177,7 +190,10 @@ class _SrsSectionState extends State<SrsSection> {
           padding: const EdgeInsets.only(top: 2),
           child: Text(
             getLocalText.s("One URL per line — several rule sets in one rule."),
-            style: TextStyle(fontSize: 11, color: t.colorScheme.onSurfaceVariant),
+            style: TextStyle(
+              fontSize: 11,
+              color: t.colorScheme.onSurfaceVariant,
+            ),
           ),
         ),
         const SizedBox(height: 4),
@@ -187,8 +203,10 @@ class _SrsSectionState extends State<SrsSection> {
           children: [
             Icon(Icons.update, size: 16, color: t.colorScheme.onSurfaceVariant),
             const SizedBox(width: 8),
-            Text(getLocalText.s("Check for updates"),
-                style: const TextStyle(fontSize: 13)),
+            Text(
+              getLocalText.s("Check for updates"),
+              style: const TextStyle(fontSize: 13),
+            ),
             const SizedBox(width: 12),
             Expanded(
               child: DropdownButton<int>(
@@ -220,7 +238,9 @@ class _SrsSectionState extends State<SrsSection> {
                   child: Text(
                     widget.lastUpdatedText!,
                     style: TextStyle(
-                        fontSize: 11, color: t.colorScheme.onSurfaceVariant),
+                      fontSize: 11,
+                      color: t.colorScheme.onSurfaceVariant,
+                    ),
                   ),
                 ),
                 // §366 — ручное обновление уже скачанного файла. Качает
@@ -228,8 +248,10 @@ class _SrsSectionState extends State<SrsSection> {
                 // останавливать не должно.
                 TextButton.icon(
                   icon: const Icon(Icons.update, size: 14),
-                  label: Text(getLocalText.s("Update now"),
-                      style: const TextStyle(fontSize: 12)),
+                  label: Text(
+                    getLocalText.s("Update now"),
+                    style: const TextStyle(fontSize: 12),
+                  ),
                   onPressed: widget.state == SrsDownloadState.loading
                       ? null
                       : widget.onDownload,
@@ -242,20 +264,39 @@ class _SrsSectionState extends State<SrsSection> {
             ),
           ),
         const SizedBox(height: 4),
-        TextButton.icon(
-          icon: const Icon(Icons.content_paste, size: 14),
-          label: Text(getLocalText.s("Paste"),
-              style: const TextStyle(fontSize: 12)),
-          onPressed: () async {
-            final data = await Clipboard.getData(Clipboard.kTextPlain);
-            final text = (data?.text ?? '').trim();
-            if (text.isEmpty) return;
-            widget.urlCtrl.text = text;
-          },
-          style: TextButton.styleFrom(
-            minimumSize: const Size(0, 28),
-            padding: const EdgeInsets.symmetric(horizontal: 8),
-          ),
+        Wrap(
+          spacing: 4,
+          children: [
+            TextButton.icon(
+              icon: const Icon(Icons.travel_explore, size: 14),
+              label: Text(
+                getLocalText.s("Find rule set"),
+                style: const TextStyle(fontSize: 12),
+              ),
+              onPressed: _findRuleSet,
+              style: TextButton.styleFrom(
+                minimumSize: const Size(0, 28),
+                padding: const EdgeInsets.symmetric(horizontal: 8),
+              ),
+            ),
+            TextButton.icon(
+              icon: const Icon(Icons.content_paste, size: 14),
+              label: Text(
+                getLocalText.s("Paste"),
+                style: const TextStyle(fontSize: 12),
+              ),
+              onPressed: () async {
+                final data = await Clipboard.getData(Clipboard.kTextPlain);
+                final text = (data?.text ?? '').trim();
+                if (text.isEmpty) return;
+                widget.urlCtrl.text = text;
+              },
+              style: TextButton.styleFrom(
+                minimumSize: const Size(0, 28),
+                padding: const EdgeInsets.symmetric(horizontal: 8),
+              ),
+            ),
+          ],
         ),
       ],
     );

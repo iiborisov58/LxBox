@@ -611,7 +611,7 @@
     "value": "Добавить адрес"
   },
   "Android identifies these apps by one UID. Routing rules and Tunnel apps apply to all of them at once.": {
-    "value": "Android различает эти приложения по одному UID. Правила маршрутизации и Tunnel apps действуют на все сразу."
+    "value": "Android различает эти приложения по одному UID. Правила маршрутизации и «Приложения туннеля» действуют на все сразу."
   },
   "Answer": {
     "value": "Ответ"
@@ -2891,7 +2891,7 @@
     "value": "Как это работает: Направления, правила, DNS, detour, рецепты"
   },
   "INBOUND": {
-    "value": "INBOUND"
+    "value": "ВХОДЯЩИЙ ИНТЕРФЕЙС"
   },
   "IP": {
     "value": "IP"
@@ -3459,7 +3459,7 @@
     "value": "Отчётов OOM нет"
   },
   "No Tailscale nodes yet — add one on the Servers screen first": {
-    "value": "Узлов Tailscale пока нет — сначала добавьте узел на экране Servers"
+    "value": "Узлов Tailscale пока нет — сначала добавьте узел на экране «Серверы»"
   },
   "No SSID filter — rule is active on any Wi-Fi network.": {
     "value": "Фильтра по SSID нет — правило активно в любой сети Wi-Fi."
@@ -3683,7 +3683,7 @@
     "value": "Этим узлом нельзя поделиться ссылкой."
   },
   "down": {
-    "value": "down"
+    "value": "нет связи"
   },
   "Layout": {
     "value": "Компоновка"
@@ -3698,7 +3698,7 @@
     "value": "Показывать список узлов в две колонки, когда ширина окна не меньше 600 dp (планшеты, альбомная ориентация, разделённый экран)."
   },
   "sleep": {
-    "value": "sleep"
+    "value": "сон"
   },
   "Tile added to Quick Settings.": {
     "value": "Плитка добавлена в быстрые настройки."
@@ -3716,7 +3716,7 @@
     "value": "неизвестная ошибка"
   },
   "up": {
-    "value": "up"
+    "value": "на связи"
   },
   "Node \"%1$s\" was dropped: its relay \"%2$s\" is missing, unusable or loops. Connecting directly would have bypassed the relay.": {
     "value": "Узел «%1$s» отброшен: релей «%2$s» отсутствует, непригоден или зациклен. Прямое подключение прошло бы мимо релея."
@@ -4570,10 +4570,10 @@
     "value": "SSID"
   },
   "START": {
-    "value": "START"
+    "value": "СТАРТ"
   },
   "STOP": {
-    "value": "STOP"
+    "value": "СТОП"
   },
   "Save": {
     "value": "Сохранить"
@@ -4910,7 +4910,7 @@
     "value": "Включите VPN, чтобы замерить эту цепочку: её хопы существуют только в работающем ядре."
   },
   "Start timed out after %1$d s (post-start did not finish, %2$d endpoints)": {
-    "value": "Start timed out after %1$d s (post-start did not finish, %2$d endpoints)"
+    "value": "Запуск не уложился в %1$d с (post-start не завершился, endpoint'ов: %2$d)"
   },
   "State": {
     "value": "Состояние"
@@ -4928,7 +4928,12 @@
     "value": "Закреплять сессии по"
   },
   "Stop": {
-    "value": "Stop"
+    "value": "Остановить",
+    "special": {
+      "1": {
+        "value": "Stop"
+      }
+    }
   },
   "Stop VPN": {
     "value": "Остановить VPN"
@@ -5092,7 +5097,7 @@
     "value": "Занят другим VPN"
   },
   "Tap START to begin capture. Recording continues when you leave this tab.": {
-    "value": "Нажмите START, чтобы начать запись. Запись продолжится, когда вы уйдёте с этой вкладки."
+    "value": "Нажмите СТАРТ, чтобы начать запись. Запись продолжится, когда вы уйдёте с этой вкладки."
   },
   "Tap Start to begin": {
     "value": "Для запуска нажмите «Начать тест»"
@@ -5956,7 +5961,7 @@
     "value": "≤%d мс"
   },
   "off": {
-    "value": "off"
+    "value": "выкл."
   },
   "Turn on": {
     "value": "Включить"
@@ -7003,5 +7008,268 @@
   },
   "Appears only while a Tailscale node has Allow Taildrop.": {
     "value": "Есть, только пока у узла Tailscale включён Allow Taildrop."
+  },
+  "Health": {
+    "value": "Состояние"
+  },
+  "Checking…": {
+    "value": "Проверка…"
+  },
+  "Last tick skipped: the screen was off": {
+    "value": "Последняя проверка пропущена: экран был выключен"
+  },
+  "Last tick skipped: the block lists are not downloaded yet": {
+    "value": "Последняя проверка пропущена: списки блокировок ещё не скачаны"
+  },
+  "Last tick skipped: the route sends everything direct": {
+    "value": "Последняя проверка пропущена: маршрут отправляет всё напрямую"
+  },
+  "Not checked yet": {
+    "value": "Ещё не проверялось"
+  },
+  "%1$s: %2$d of %3$d responded": {
+    "value": "%1$s: ответили %2$d из %3$d"
+  },
+  "%1$s: none of %2$d responded": {
+    "value": "%1$s: не ответил ни один из %2$d"
+  },
+  "Connect the VPN to run the check": {
+    "value": "Подключите VPN, чтобы запустить проверку"
+  },
+  "Only notify": {
+    "value": "Только уведомить"
+  },
+  "Reset network": {
+    "value": "Сбросить сеть"
+  },
+  "Blocked sites check": {
+    "value": "Проверка заблокированных сайтов"
+  },
+  "Every few minutes opens a few sites from the Russian block lists through the running tunnel and warns when none of them respond. Off by default: every check is real traffic and some battery.": {
+    "value": "Раз в несколько минут открывает через работающий туннель несколько сайтов из российских списков блокировок и предупреждает, если не ответил ни один. По умолчанию выключено: каждая проверка — реальный трафик и немного батареи."
+  },
+  "Check blocked sites": {
+    "value": "Проверять заблокированные сайты"
+  },
+  "%d min": {
+    "value": "%d мин"
+  },
+  "Sites per check": {
+    "value": "Сайтов за проверку"
+  },
+  "Timeout per site": {
+    "value": "Таймаут на сайт"
+  },
+  "%d s": {
+    "value": "%d с"
+  },
+  "On failure": {
+    "value": "При провале"
+  },
+  "Pause while the screen is off": {
+    "value": "Не проверять при выключенном экране"
+  },
+  "Blocked sites are not opening": {
+    "value": "Заблокированные сайты не открываются"
+  },
+  "The tunnel is connected, but none of the checked blocked sites responded through it.": {
+    "value": "Туннель подключён, но ни один из проверенных заблокированных сайтов через него не ответил."
+  },
+  "%d sites": {
+    "value": {
+      "one": "%d сайт",
+      "few": "%d сайта",
+      "many": "%d сайтов",
+      "other": "%d сайта"
+    }
+  },
+  "%1$s · idle for %2$d s": {
+    "value": "%1$s · простой %2$d с"
+  },
+  "Direct": {
+    "value": "Напрямую"
+  },
+  "%d h": {
+    "value": "%d ч"
+  },
+  "Mixed": {
+    "value": "Смешанный"
+  },
+  "Find rule set": {
+    "value": "Найти набор правил"
+  },
+  "Refresh list": {
+    "value": "Обновить список"
+  },
+  "Name, e.g. youtube or ru-blocked": {
+    "value": "Имя, например youtube или ru-blocked"
+  },
+  "%1$s: list unavailable (%2$s)": {
+    "value": "%1$s: список недоступен (%2$s)"
+  },
+  "Shown %1$d of %2$d": {
+    "value": "Показано %1$d из %2$d"
+  },
+  "Found: %d": {
+    "value": "Найдено: %d"
+  },
+  "list from %s": {
+    "value": "список от: %s"
+  },
+  "Nothing found": {
+    "value": "Ничего не найдено"
+  },
+  "Not a valid rule set: %s": {
+    "value": "Это не набор правил sing-box: %s"
+  },
+  "Download failed: %s": {
+    "value": "Не удалось скачать: %s"
+  },
+  "Not found in this file": {
+    "value": "В этом файле не найдено"
+  },
+  "Found: domain %s": {
+    "value": "Найдено: домен %s"
+  },
+  "Found: domain suffix %s": {
+    "value": "Найдено: суффикс домена %s"
+  },
+  "Found: keyword %s": {
+    "value": "Найдено: ключевое слово %s"
+  },
+  "Found: regex %s": {
+    "value": "Найдено: регулярное выражение %s"
+  },
+  "Found: IP range %s": {
+    "value": "Найдено: диапазон IP %s"
+  },
+  "Check file": {
+    "value": "Проверить файл"
+  },
+  "Use": {
+    "value": "Использовать"
+  },
+  "Domains: %d": {
+    "value": "Доменов: %d"
+  },
+  "Domain suffixes: %d": {
+    "value": "Суффиксов доменов: %d"
+  },
+  "Keywords: %d": {
+    "value": "Ключевых слов: %d"
+  },
+  "Regex: %d": {
+    "value": "Регулярных выражений: %d"
+  },
+  "IPv4 ranges: %d": {
+    "value": "Диапазонов IPv4: %d"
+  },
+  "IPv6 ranges: %d": {
+    "value": "Диапазонов IPv6: %d"
+  },
+  "Domain or IP": {
+    "value": "Домен или IP"
+  },
+  "Profiler is already recording": {
+    "value": "Профайлер уже ведёт запись"
+  },
+  "Use the events of the current recording, or start a new one? A new recording clears the profiler log.": {
+    "value": "Взять события текущей записи или начать новую? Новая запись очистит журнал профайлера."
+  },
+  "Start over": {
+    "value": "Начать заново"
+  },
+  "Use current": {
+    "value": "Взять текущую"
+  },
+  "Paste text with domains": {
+    "value": "Вставьте текст с доменами"
+  },
+  "A list, links or any text: domains are picked out of it": {
+    "value": "Список, ссылки или любой текст — домены будут извлечены"
+  },
+  "Extract": {
+    "value": "Извлечь"
+  },
+  "No domains found in the text": {
+    "value": "В тексте не найдено доменов"
+  },
+  "recorded": {
+    "value": "записан"
+  },
+  "from text": {
+    "value": "из текста"
+  },
+  "from rule set": {
+    "value": "из набора правил"
+  },
+  "Works direct": {
+    "value": "Работает напрямую"
+  },
+  "Only via proxy": {
+    "value": "Только через прокси"
+  },
+  "No response": {
+    "value": "Не отвечает"
+  },
+  "Pick domains": {
+    "value": "Подобрать домены"
+  },
+  "Add (%d)": {
+    "value": "Добавить (%d)"
+  },
+  "Record app": {
+    "value": "Записать приложение"
+  },
+  "Paste text": {
+    "value": "Вставить текст"
+  },
+  "From rule set": {
+    "value": "Из набора правил"
+  },
+  "Connections without a domain (IP only): %d — a domain rule will not catch them": {
+    "value": "Соединений без домена (только IP): %d — правило по домену их не поймает"
+  },
+  "Not downloaded, not checked: %s": {
+    "value": "Не скачаны, не проверены: %s"
+  },
+  "Groups: %d": {
+    "value": "Групп: %d"
+  },
+  "Check exits": {
+    "value": "Проверить выходы"
+  },
+  "Exit check needs the VPN to be connected": {
+    "value": "Для проверки выходов VPN должен быть подключён"
+  },
+  "Record an app, paste a list or take a rule set — the helper will fold the domains into rule entries and show which of your rules already match them.": {
+    "value": "Запишите приложение, вставьте список или возьмите набор правил — помощник свернёт домены в записи правила и покажет, какие из ваших правил их уже ловят."
+  },
+  "Recording: %s": {
+    "value": "Запись: %s"
+  },
+  "Switch to the app, do what should work (update, download, sign in), then come back and tap Done.": {
+    "value": "Переключитесь в приложение, сделайте то, что должно работать (обновление, загрузка, вход), затем вернитесь и нажмите «Готово»."
+  },
+  "VPN is not connected — nothing will be recorded.": {
+    "value": "VPN не подключён — ничего не запишется."
+  },
+  "Domains so far: %1$d · IP only: %2$d": {
+    "value": "Доменов: %1$d · только IP: %2$d"
+  },
+  "connections: %d": {
+    "value": "соединений: %d"
+  },
+  "suffix %s": {
+    "value": "суффикс %s"
+  },
+  "Already matched by rule «%1$s» → %2$s": {
+    "value": "Уже совпадает с правилом «%1$s» → %2$s"
+  },
+  "Suffix": {
+    "value": "Суффикс"
+  },
+  "Exact": {
+    "value": "Точно"
   }
 }

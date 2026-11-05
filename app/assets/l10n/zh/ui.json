@@ -2651,7 +2651,7 @@
     "value": "工作原理：方向、规则、DNS、detour、示例"
   },
   "INBOUND": {
-    "value": "INBOUND"
+    "value": "入站"
   },
   "IP": {
     "value": "IP"
@@ -3422,7 +3422,7 @@
     "value": "此节点无法以链接形式分享。"
   },
   "down": {
-    "value": "down"
+    "value": "断开"
   },
   "Layout": {
     "value": "布局"
@@ -3437,7 +3437,7 @@
     "value": "窗口宽度不小于 600 dp 时（平板、横屏、分屏），节点列表以双栏显示。"
   },
   "sleep": {
-    "value": "sleep"
+    "value": "休眠"
   },
   "Tile added to Quick Settings.": {
     "value": "磁贴已添加到快捷设置。"
@@ -3455,7 +3455,7 @@
     "value": "未知错误"
   },
   "up": {
-    "value": "up"
+    "value": "在线"
   },
   "Node \"%1$s\" was dropped: its relay \"%2$s\" is missing, unusable or loops. Connecting directly would have bypassed the relay.": {
     "value": "节点「%1$s」已丢弃：它的 relay「%2$s」缺失、不可用或成环。直连会绕过 relay。"
@@ -4637,7 +4637,7 @@
     "value": "启动 VPN 才能测量该链路——它的各跳只存在于运行中的内核里。"
   },
   "Start timed out after %1$d s (post-start did not finish, %2$d endpoints)": {
-    "value": "Start timed out after %1$d s (post-start did not finish, %2$d endpoints)"
+    "value": "启动在 %1$d 秒后超时（post-start 未完成，endpoint 数：%2$d）"
   },
   "State": {
     "value": "状态"
@@ -4655,7 +4655,12 @@
     "value": "会话保持依据"
   },
   "Stop": {
-    "value": "停止"
+    "value": "停止",
+    "special": {
+      "1": {
+        "value": "停止"
+      }
+    }
   },
   "Stop VPN": {
     "value": "停止 VPN"
@@ -4819,7 +4824,7 @@
     "value": "已被其它 VPN 占用"
   },
   "Tap START to begin capture. Recording continues when you leave this tab.": {
-    "value": "点 START 开始抓取。离开本页后录制仍会继续。"
+    "value": "点“启动”开始抓取。离开本页后录制仍会继续。"
   },
   "Tap Start to begin": {
     "value": "点「开始测试」即可开始"
@@ -5677,7 +5682,7 @@
     "value": "≤%dms"
   },
   "off": {
-    "value": "off"
+    "value": "关闭"
   },
   "Turn on": {
     "value": "开启"
@@ -6712,5 +6717,265 @@
   },
   "Appears only while a Tailscale node has Allow Taildrop.": {
     "value": "仅当 Tailscale 节点启用 Allow Taildrop 时显示。"
+  },
+  "Health": {
+    "value": "健康"
+  },
+  "Checking…": {
+    "value": "正在检查…"
+  },
+  "Last tick skipped: the screen was off": {
+    "value": "上次检查已跳过：屏幕处于关闭状态"
+  },
+  "Last tick skipped: the block lists are not downloaded yet": {
+    "value": "上次检查已跳过：封锁列表尚未下载"
+  },
+  "Last tick skipped: the route sends everything direct": {
+    "value": "上次检查已跳过：路由将所有流量直连"
+  },
+  "Not checked yet": {
+    "value": "尚未检查"
+  },
+  "%1$s: %2$d of %3$d responded": {
+    "value": "%1$s：%3$d 个中有 %2$d 个响应"
+  },
+  "%1$s: none of %2$d responded": {
+    "value": "%1$s：%2$d 个均无响应"
+  },
+  "Connect the VPN to run the check": {
+    "value": "请先连接 VPN 再运行检查"
+  },
+  "Only notify": {
+    "value": "仅通知"
+  },
+  "Reset network": {
+    "value": "重置网络"
+  },
+  "Blocked sites check": {
+    "value": "被封锁网站检查"
+  },
+  "Every few minutes opens a few sites from the Russian block lists through the running tunnel and warns when none of them respond. Off by default: every check is real traffic and some battery.": {
+    "value": "每隔几分钟通过正在运行的隧道打开俄罗斯封锁列表中的几个网站，若均无响应则发出提醒。默认关闭：每次检查都会产生真实流量并消耗少量电量。"
+  },
+  "Check blocked sites": {
+    "value": "检查被封锁的网站"
+  },
+  "%d min": {
+    "value": "%d 分钟"
+  },
+  "Sites per check": {
+    "value": "每次检查的网站数"
+  },
+  "Timeout per site": {
+    "value": "每个网站的超时"
+  },
+  "%d s": {
+    "value": "%d 秒"
+  },
+  "On failure": {
+    "value": "失败时"
+  },
+  "Pause while the screen is off": {
+    "value": "屏幕关闭时暂停"
+  },
+  "Blocked sites are not opening": {
+    "value": "被封锁的网站无法打开"
+  },
+  "The tunnel is connected, but none of the checked blocked sites responded through it.": {
+    "value": "隧道已连接，但所检查的被封锁网站均未通过隧道响应。"
+  },
+  "%d sites": {
+    "value": {
+      "other": "%d 个网站"
+    }
+  },
+  "%1$s · idle for %2$d s": {
+    "value": "%1$s · 空闲 %2$d 秒"
+  },
+  "Direct": {
+    "value": "直连"
+  },
+  "%d h": {
+    "value": "%d 小时"
+  },
+  "Mixed": {
+    "value": "混合"
+  },
+  "Find rule set": {
+    "value": "查找规则集"
+  },
+  "Refresh list": {
+    "value": "刷新列表"
+  },
+  "Name, e.g. youtube or ru-blocked": {
+    "value": "名称，例如 youtube 或 ru-blocked"
+  },
+  "%1$s: list unavailable (%2$s)": {
+    "value": "%1$s：列表不可用（%2$s）"
+  },
+  "Shown %1$d of %2$d": {
+    "value": "显示 %1$d / %2$d"
+  },
+  "Found: %d": {
+    "value": "找到：%d"
+  },
+  "list from %s": {
+    "value": "列表获取于：%s"
+  },
+  "Nothing found": {
+    "value": "未找到"
+  },
+  "Not a valid rule set: %s": {
+    "value": "不是有效的规则集：%s"
+  },
+  "Download failed: %s": {
+    "value": "下载失败：%s"
+  },
+  "Not found in this file": {
+    "value": "此文件中未找到"
+  },
+  "Found: domain %s": {
+    "value": "已找到：域名 %s"
+  },
+  "Found: domain suffix %s": {
+    "value": "已找到：域名后缀 %s"
+  },
+  "Found: keyword %s": {
+    "value": "已找到：关键词 %s"
+  },
+  "Found: regex %s": {
+    "value": "已找到：正则 %s"
+  },
+  "Found: IP range %s": {
+    "value": "已找到：IP 范围 %s"
+  },
+  "Check file": {
+    "value": "检查文件"
+  },
+  "Use": {
+    "value": "使用"
+  },
+  "Domains: %d": {
+    "value": "域名：%d"
+  },
+  "Domain suffixes: %d": {
+    "value": "域名后缀：%d"
+  },
+  "Keywords: %d": {
+    "value": "关键词：%d"
+  },
+  "Regex: %d": {
+    "value": "正则：%d"
+  },
+  "IPv4 ranges: %d": {
+    "value": "IPv4 范围：%d"
+  },
+  "IPv6 ranges: %d": {
+    "value": "IPv6 范围：%d"
+  },
+  "Domain or IP": {
+    "value": "域名或 IP"
+  },
+  "Profiler is already recording": {
+    "value": "分析器已在录制"
+  },
+  "Use the events of the current recording, or start a new one? A new recording clears the profiler log.": {
+    "value": "使用当前录制的事件，还是重新开始？重新录制会清空分析器日志。"
+  },
+  "Start over": {
+    "value": "重新开始"
+  },
+  "Use current": {
+    "value": "使用当前"
+  },
+  "Paste text with domains": {
+    "value": "粘贴含域名的文本"
+  },
+  "A list, links or any text: domains are picked out of it": {
+    "value": "列表、链接或任意文本：将从中提取域名"
+  },
+  "Extract": {
+    "value": "提取"
+  },
+  "No domains found in the text": {
+    "value": "文本中未找到域名"
+  },
+  "recorded": {
+    "value": "已录制"
+  },
+  "from text": {
+    "value": "来自文本"
+  },
+  "from rule set": {
+    "value": "来自规则集"
+  },
+  "Works direct": {
+    "value": "直连可用"
+  },
+  "Only via proxy": {
+    "value": "仅可通过代理"
+  },
+  "No response": {
+    "value": "无响应"
+  },
+  "Pick domains": {
+    "value": "选取域名"
+  },
+  "Add (%d)": {
+    "value": "添加（%d）"
+  },
+  "Record app": {
+    "value": "录制应用"
+  },
+  "Paste text": {
+    "value": "粘贴文本"
+  },
+  "From rule set": {
+    "value": "来自规则集"
+  },
+  "Connections without a domain (IP only): %d — a domain rule will not catch them": {
+    "value": "无域名的连接（仅 IP）：%d —— 域名规则无法匹配它们"
+  },
+  "Not downloaded, not checked: %s": {
+    "value": "未下载，未检查：%s"
+  },
+  "Groups: %d": {
+    "value": "分组：%d"
+  },
+  "Check exits": {
+    "value": "检查出口"
+  },
+  "Exit check needs the VPN to be connected": {
+    "value": "检查出口需要已连接 VPN"
+  },
+  "Record an app, paste a list or take a rule set — the helper will fold the domains into rule entries and show which of your rules already match them.": {
+    "value": "录制应用、粘贴列表或选取规则集——助手会把域名归并为规则条目，并显示哪些现有规则已匹配它们。"
+  },
+  "Recording: %s": {
+    "value": "录制中：%s"
+  },
+  "Switch to the app, do what should work (update, download, sign in), then come back and tap Done.": {
+    "value": "切换到该应用，执行需要正常工作的操作（更新、下载、登录），然后返回并点击“完成”。"
+  },
+  "VPN is not connected — nothing will be recorded.": {
+    "value": "VPN 未连接——不会录制任何内容。"
+  },
+  "Domains so far: %1$d · IP only: %2$d": {
+    "value": "域名：%1$d · 仅 IP：%2$d"
+  },
+  "connections: %d": {
+    "value": "连接：%d"
+  },
+  "suffix %s": {
+    "value": "后缀 %s"
+  },
+  "Already matched by rule «%1$s» → %2$s": {
+    "value": "已被规则“%1$s”匹配 → %2$s"
+  },
+  "Suffix": {
+    "value": "后缀"
+  },
+  "Exact": {
+    "value": "精确"
   }
 }

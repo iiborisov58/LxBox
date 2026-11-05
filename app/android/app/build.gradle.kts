@@ -114,6 +114,24 @@ android {
         }
     }
 
+    // Nightly: `LXBOX_NIGHTLY=1 flutter build apk --release|--debug` — свой
+    // applicationId (ставится рядом с основной установкой), суффикс версии и
+    // синяя иконка из src/nightly/res. Release и debug различаются id и именем
+    // («L×Box Nightly» / «L×Box Nightly Debug»), так что ставятся обе разом.
+    // Без переменной сборка не меняется (как LXBOX_ABI_FILTER выше).
+    if (System.getenv("LXBOX_NIGHTLY") == "1") {
+        buildTypes.getByName("release") {
+            applicationIdSuffix = ".nightly"
+            versionNameSuffix = "-nightly"
+        }
+        buildTypes.getByName("debug") {
+            applicationIdSuffix = ".nightly.debug"
+            versionNameSuffix = "-nightly-debug"
+        }
+        sourceSets.getByName("release").res.srcDirs("src/nightly/res", "src/nightlyRelease/res")
+        sourceSets.getByName("debug").res.srcDirs("src/nightly/res", "src/nightlyDebug/res")
+    }
+
     signingConfigs {
         if (hasReleaseKeystore()) {
             create("release") {

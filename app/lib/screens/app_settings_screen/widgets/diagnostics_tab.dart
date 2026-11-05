@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../../services/settings_storage.dart';
 import '../../../services/l10n/locale_controller.dart';
 import '../../../widgets/template_var_list.dart';
+import 'reachability_island.dart';
 
 /// Diagnostics tab для App Settings.
 ///
@@ -175,6 +176,8 @@ class DiagnosticsTab extends StatelessWidget {
             ),
           ],
         ),
+        // §721 — проверка доступности заблокированных ресурсов (opt-in).
+        const ReachabilityIsland(),
         SettingsIsland(
           title: getLocalText.s("Developer"),
           children: [

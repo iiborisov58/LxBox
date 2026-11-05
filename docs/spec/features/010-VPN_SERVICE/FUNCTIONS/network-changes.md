@@ -21,7 +21,9 @@ option `interrupt_exist_connections`); the application closes nothing.
 
 ## Parameters
 
-No user settings. Fixed value: quiet before a reset on network change — 1.5 s.
+No user settings. Fixed values: quiet before a reset on network change — 1.5 s;
+wait for a validated network before the initial reset after a start without a
+network — up to 10 s.
 
 ## Inputs / Outputs
 
@@ -38,6 +40,14 @@ current interface or its absence.
   interfaces are known and differ. The first connection, an update of the same
   network's properties and network loss give no reset; a burst of events
   collapses into one reset.
+- Start without a usable network (no physical network, or it is not yet
+  validated by the OS — typical for auto-start right after boot): the core's
+  startup DNS lookups and dials have failed, so exactly one initial reset is
+  made when the network becomes usable — 1.5 s after it is validated, or 10 s
+  after it appears if it never gets validated. Losing the network before that
+  cancels the pending reset; it is scheduled again when a network appears. If
+  the network is already validated when the core subscribes, there is no
+  initial reset. After it, the rules above apply unchanged.
 - Network loss: the core is told "no interface", no reset (there is nowhere to
   reconnect to). The previous interface is remembered, so the transition
   "Wi-Fi → no network → LTE" still gives a reset.
@@ -65,6 +75,9 @@ current interface or its absence.
   [007-NODE_LIST](../../007-NODE_LIST/FEATURE.md).
 - Deep device sleep as a reason to pause — [tunnel-sleep](tunnel-sleep.md).
 - Rule conditions on the Wi-Fi network — [004-ROUTING](../../004-ROUTING/FEATURE.md).
+- A core that does not reach "connected" within the connecting timeout while
+  there is no network is stopped by the emergency stop of the Connecting phase —
+  [tunnel-control](tunnel-control.md); the initial reset does not cover it ([720](../../../tasks/720-boot-autostart-initial-reset.md)).
 - Depends on OS capabilities: default network events, their order and the
   delay before the interface appears, the screen-on event.
 
@@ -81,3 +94,4 @@ current interface or its absence.
 | 7 | [143-interrupt](../../../tasks/143-interrupt-connections-on-node-switch.md) | Removed 2026-11-01 (§9) | Optional breaking of the group's connections on node change |
 | 8 | [290](../../../tasks/290-automation-node-switch-gaps.md) | — | Choosing the already active node — no break and no reselection |
 | 9 | [340](../../../tasks/340-user-present-rebind-stale-endpoints.md) | v2 (SCREEN_ON) shipped | Screen on → rebind stale WG/AWG |
+| 10 | [720](../../../tasks/720-boot-autostart-initial-reset.md) | Code-complete | One initial reset when the tunnel started before a usable network (auto-start after boot) |

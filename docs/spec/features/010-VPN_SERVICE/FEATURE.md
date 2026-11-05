@@ -251,7 +251,12 @@ gesture / OS event
 - Logs, the core crash report — [013-DIAGNOSTICS](../013-DIAGNOSTICS/FEATURE.md);
   the Debug API — [027-DEBUG_API](../027-DEBUG_API/FEATURE.md).
 - An active health watchdog with probes and escalation (§042F, §088) — not
-  implemented on purpose (battery).
+  implemented on purpose (battery). The opt-in blocked-sites check is a
+  different thing and lives in
+  [009-NODE_HEALTH → blocked-reachability](../009-NODE_HEALTH/FUNCTIONS/blocked-reachability.md)
+  (§721): off by default, a rare timer (5–60 min) only while Connected, paused
+  with the screen off, no escalation ladder; its reset/reconnect reaction obeys
+  P12 (an explicit Stop is not resurrected).
 - Depends on OS capabilities: autostart after boot, surviving in the
   background and after process death, the moment of deep sleep, receiving
   network and screen events, showing notifications, the uniqueness of the

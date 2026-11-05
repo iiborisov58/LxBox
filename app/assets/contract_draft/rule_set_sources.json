@@ -1,0 +1,91 @@
+{
+  "_why": "§723 — черновик реестра источников .srs до прихода в контракт лаунчера (как source_kinds.json в §480 W6). Форма — готовая запись registry/: v + rule_set_sources. Загрузчик берёт assets/contract/registry/rule_set_sources.json, если он есть, и только иначе — этот файл; после бампа с ним черновик удаляется.",
+  "v": 1,
+  "rule_set_sources": {
+    "note": "Источники готовых rule-set'ов sing-box (.srs) для помощника поиска в редакторе правила (LxBox §723). Код источников не знает: список, ветки и каталоги — только здесь. Файлы листаются без рекурсии, по каталогу: GitHub API git/trees/<ref>:<path>; jsDelivr flat-листинг — запасной путь там, где jsdelivr_list: true (у репозиториев больше 50 МБ jsDelivr листинг не отдаёт, 403). Скачивание файла — raw.githubusercontent.com или cdn.jsdelivr.net/gh, на выбор пользователя.",
+    "list_ttl_hours": {
+      "value": 24,
+      "note": "Срок кеша списка файлов. Лимит GitHub API без токена — 60 запросов в час с IP; полное обновление стоит по запросу на каталог."
+    },
+    "sources": [
+      {
+        "id": "runetfreedom",
+        "title": "runetfreedom — Russia",
+        "repo": "runetfreedom/russia-v2ray-rules-dat",
+        "ref": "release",
+        "jsdelivr_list": false,
+        "note": "Списки блокировок РФ (ru-blocked, ru-available-only-inside и др.) поверх v2fly.",
+        "dirs": [
+          {
+            "path": "sing-box/rule-set-geosite",
+            "kind": "geosite"
+          },
+          {
+            "path": "sing-box/rule-set-geoip",
+            "kind": "geoip"
+          }
+        ]
+      },
+      {
+        "id": "sagernet-geosite",
+        "title": "SagerNet sing-geosite",
+        "repo": "SagerNet/sing-geosite",
+        "ref": "rule-set",
+        "jsdelivr_list": true,
+        "note": "Официальные geosite-наборы sing-box из v2fly/domain-list-community.",
+        "dirs": [
+          {
+            "path": "",
+            "kind": "geosite"
+          }
+        ]
+      },
+      {
+        "id": "sagernet-geoip",
+        "title": "SagerNet sing-geoip",
+        "repo": "SagerNet/sing-geoip",
+        "ref": "rule-set",
+        "jsdelivr_list": true,
+        "note": "Официальные geoip-наборы sing-box по странам.",
+        "dirs": [
+          {
+            "path": "",
+            "kind": "geoip"
+          }
+        ]
+      },
+      {
+        "id": "metacubex",
+        "title": "MetaCubeX meta-rules-dat",
+        "repo": "MetaCubeX/meta-rules-dat",
+        "ref": "sing",
+        "jsdelivr_list": false,
+        "note": "Расширенные geosite/geoip (сервисы, CDN, реклама). Каталоги asn/ и geo-lite/ не листаются: десятки тысяч файлов.",
+        "dirs": [
+          {
+            "path": "geo/geosite",
+            "kind": "geosite"
+          },
+          {
+            "path": "geo/geoip",
+            "kind": "geoip"
+          }
+        ]
+      },
+      {
+        "id": "legiz",
+        "title": "legiz-ru sb-rule-sets",
+        "repo": "legiz-ru/sb-rule-sets",
+        "ref": "main",
+        "jsdelivr_list": true,
+        "note": "Небольшие наборы под РФ: itdoginfo, Discord voice и др. В одном файле бывают и домены, и IP.",
+        "dirs": [
+          {
+            "path": "",
+            "kind": "mixed"
+          }
+        ]
+      }
+    ]
+  }
+}

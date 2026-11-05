@@ -52,6 +52,7 @@ class _AutomationTabState extends State<AutomationTab> {
   bool _emitLifecycle = false;
   bool _emitState = false;
   bool _emitSubs = false;
+  bool _emitHealth = false;
 
   @override
   void initState() {
@@ -64,12 +65,14 @@ class _AutomationTabState extends State<AutomationTab> {
     final lifecycle = await SettingsStorage.getAutomationEmitLifecycle();
     final state = await SettingsStorage.getAutomationEmitState();
     final subs = await SettingsStorage.getAutomationEmitSubs();
+    final health = await SettingsStorage.getAutomationEmitHealth();
     if (!mounted) return;
     setState(() {
       _receiveEnabled = receive;
       _emitLifecycle = lifecycle;
       _emitState = state;
       _emitSubs = subs;
+      _emitHealth = health;
       _loaded = true;
     });
   }
@@ -269,8 +272,18 @@ class _AutomationTabState extends State<AutomationTab> {
                   SettingsStorage.setAutomationEmitSubs, (x) => _emitSubs = x)
               : null,
         ),
-        // §605 — категории Health в UI нет: источника событий нет (042F
-        // won't-fix), тумблер ничего не включал. Имена зарезервированы.
+        // §721 — Health вернулась в UI: источник — проверка доступности
+        // заблокированных ресурсов (§605 убирал пустой тумблер).
+        SwitchListTile(
+          title: Text(getLocalText.s("Health")),
+          // l10n-exempt: broadcast event names (wire values)
+          subtitle: const Text('REACHABILITY_FAILED · REACHABILITY_RESTORED'),
+          value: _emitHealth,
+          onChanged: _loaded
+              ? (v) => _onEmitChanged(v,
+                  SettingsStorage.setAutomationEmitHealth, (x) => _emitHealth = x)
+              : null,
+        ),
 
         const Divider(height: 28),
         OutlinedButton.icon(

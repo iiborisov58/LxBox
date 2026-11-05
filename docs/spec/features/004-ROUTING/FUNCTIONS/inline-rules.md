@@ -78,6 +78,20 @@ headless match — a route rule without `rule_set`.
 - A rule by app sees only traffic that already got into the core; in Proxy
   mode app attribution, per the template hint, does not work.
 
+## "Pick domains" helper (§724)
+
+A button in the MATCH section. Candidates come from a profiler recording of the
+chosen apps (028), from pasted text or from an `.srs` picked in the set finder
+(723). Hosts are folded by the Public Suffix List including its private
+section: `api.github.com` → suffix `github.com`, while shared hosting
+(`githubusercontent.com`, `cloudfront.net`, `github.io`) is never offered as a
+suffix. Each group shows which enabled own rule already matches it (domain
+conditions only, in list order) and, on a button with the VPN connected,
+whether it works direct or only via proxy (a request through the core by tag,
+as in 721). The selection is appended to Domain suffix / Domain without
+duplicates. A recording started by the helper stops when the screen is left;
+a running profiler recording is never restarted without asking.
+
 ## Boundaries
 
 - There is no condition negation; `domain_regex`, `source_port` are not exposed in the form —
@@ -100,3 +114,4 @@ headless match — a route rule without `rule_set`.
 | 5 | [064](../../../tasks/064-view-tab-preview-independent-of-enabled.md) | done | The View preview does not depend on the switch |
 | 6 | [144](../../../tasks/144-domain-suffix-validator.md) | Done | A separate suffix check, IDN → punycode |
 | 7 | [240](../../../tasks/240-network-matcher.md) | in develop | The `network` filter and the NETWORK & PROTOCOL section |
+| 8 | [724](../../../tasks/724-domain-helper.md) | Code-complete | Domain picking helper: app recording, text, rule set, coverage, exit check |

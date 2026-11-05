@@ -17,6 +17,11 @@ object DefaultNetworkMonitor {
     /// при переходе шлёт пачку callback'ов; копим тишину и ресетим один раз.
     private const val RESET_DEBOUNCE_MS = 1500L
 
+    /// boot-race — сколько ждать VALIDATED у первой появившейся сети, прежде
+    /// чем всё равно сделать начальный reset (сети без валидации: отключённая
+    /// проверка captive portal, заблокированный connectivity-check и т.п.).
+    private const val INITIAL_VALIDATION_WAIT_MS = 10_000L
+
     var defaultNetwork: Network? = null
     private var listener: InterfaceUpdateListener? = null
     private var scope: CoroutineScope? = null
@@ -29,6 +34,19 @@ object DefaultNetworkMonitor {
     @Volatile
     private var lastIfName: String? = null
     private var resetJob: Job? = null
+
+    /// boot-race — ядро стартовало без пригодной (есть + VALIDATED) физической
+    /// сети: DNS-резолв серверов и dial аутбаундов на старте упали. Появление
+    /// сети для §087 — «первый connect», reset он не даёт, поэтому этот флаг
+    /// разрешает ОДИН начальный resetNetwork(), когда сеть станет пригодной.
+    @Volatile
+    private var awaitingUsableNetwork = false
+    /// boot-race — состояние VALIDATED, под которое запланирован текущий
+    /// начальный reset (null — не запланирован). Не даёт churn'у
+    /// onCapabilitiesChanged (уровень сигнала и т.п.) бесконечно переносить таймер.
+    /// `@Volatile`: пишется из корутины reset'а, читается из колбэков сети.
+    @Volatile
+    private var pendingInitialValidated: Boolean? = null
 
     suspend fun start(scope: CoroutineScope, onNetworkSwitch: () -> Unit) {
         this.scope = scope
@@ -46,6 +64,8 @@ object DefaultNetworkMonitor {
             BoxApplication.connectivity.activeNetwork?.takeUnless(::isVpn)
         } else null
         logDefaultNetwork("init", defaultNetwork)
+        awaitingUsableNetwork = defaultNetwork?.let { !isValidated(it) } ?: true
+        if (awaitingUsableNetwork) Log.i("LxBoxNet", "[init] no usable network yet — initial reset armed")
 
         DefaultNetworkListener.start(this) {
             defaultNetwork = it
@@ -63,6 +83,8 @@ object DefaultNetworkMonitor {
         resetJob = null
         onNetworkSwitch = null
         lastIfName = null
+        awaitingUsableNetwork = false
+        pendingInitialValidated = null
         scope = null
         listener = null
     }
@@ -101,6 +123,9 @@ object DefaultNetworkMonitor {
                 try {
                     val ni = NetworkInterface.getByName(ifName) ?: continue
                     lastIfName = ifName  // §087 — baseline для детекта последующих смен
+                    // boot-race — ядро подписалось, когда сеть уже пригодна:
+                    // начальный reset не нужен.
+                    if (awaitingUsableNetwork && isValidated(network)) awaitingUsableNetwork = false
                     listener.updateDefaultInterface(ifName, ni.index, isMetered(network), false)
                     return@runCatching
                 } catch (_: Exception) {
@@ -121,6 +146,12 @@ object DefaultNetworkMonitor {
             // §087 — disconnect: НЕ трогаем lastIfName (сохраняем baseline, чтобы
             // switch через "" к ДРУГОМУ интерфейсу всё равно детектился) и НЕ
             // ресетим (нет сети для re-dial).
+            // boot-race — сеть пропала до начального reset'а: отменяем его,
+            // он перепланируется при следующем появлении сети.
+            if (awaitingUsableNetwork && pendingInitialValidated != null) {
+                resetJob?.cancel()
+                pendingInitialValidated = null
+            }
             s.launch(Dispatchers.IO) {
                 runCatching { l.updateDefaultInterface("", -1, false, false) }
             }
@@ -132,7 +163,8 @@ object DefaultNetworkMonitor {
         for (attempt in 0 until 10) {
             try {
                 val ni = NetworkInterface.getByName(ifName) ?: continue
-                maybeResetOnSwitch(ifName, s)  // §087
+                if (awaitingUsableNetwork) scheduleInitialReset(network, s)  // boot-race
+                else maybeResetOnSwitch(ifName, s)  // §087
                 lastIfName = ifName
                 val metered = isMetered(network)
                 s.launch(Dispatchers.IO) {
@@ -172,6 +204,28 @@ object DefaultNetworkMonitor {
         BoxApplication.connectivity.getNetworkCapabilities(network)
             ?.hasCapability(NetworkCapabilities.NET_CAPABILITY_NOT_METERED) == false
     }.getOrDefault(false)
+
+    /// boot-race — один начальный resetNetwork() после старта без пригодной сети.
+    /// Сеть уже VALIDATED → reset через обычный debounce; ещё нет → ждём
+    /// VALIDATED до INITIAL_VALIDATION_WAIT_MS и делаем reset в любом случае.
+    /// Переход unvalidated → validated перепланирует таймер на короткий.
+    private fun scheduleInitialReset(network: Network, s: CoroutineScope) {
+        val validated = isValidated(network)
+        if (resetJob?.isActive == true && pendingInitialValidated == validated) return
+        pendingInitialValidated = validated
+        resetJob?.cancel()
+        resetJob = s.launch(Dispatchers.IO) {
+            delay(if (validated) RESET_DEBOUNCE_MS else INITIAL_VALIDATION_WAIT_MS)
+            awaitingUsableNetwork = false
+            pendingInitialValidated = null
+            Log.i("LxBoxNet", "[boot] first usable network (validated=$validated) → resetNetwork")
+            runCatching { onNetworkSwitch?.invoke() }
+        }
+    }
+
+    private fun isValidated(network: Network): Boolean =
+        BoxApplication.connectivity.getNetworkCapabilities(network)
+            ?.hasCapability(NetworkCapabilities.NET_CAPABILITY_VALIDATED) == true
 
     /// §119 — true, если у network есть VPN-транспорт (наш собственный tun).
     /// Источник истины: ConnectivityManager.getActiveNetwork() и

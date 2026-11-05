@@ -111,6 +111,8 @@ mixin _HeartbeatMixin on ChangeNotifier {
 
   void _onTunnelDead() {
     _addDebug(DebugSource.app, 'Tunnel appears dead (heartbeat lost)');
+    // §721 — как и в disconnected-ветке: проверки доступности гаснут.
+    ReachabilityMonitor.I.onTunnelDown();
     // §286 — гасим всё пробирование (mass-ping + auto-ping + folder-probe),
     // симметрично disconnected/revoked-ветке `_handleStatusEvent`.
     haltAllProbing();
