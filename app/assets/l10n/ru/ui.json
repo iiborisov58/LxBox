@@ -7157,5 +7157,107 @@
   },
   "Domain or IP": {
     "value": "Домен или IP"
+  },
+  "Profiler is already recording": {
+    "value": "Профайлер уже ведёт запись"
+  },
+  "Use the events of the current recording, or start a new one? A new recording clears the profiler log.": {
+    "value": "Взять события текущей записи или начать новую? Новая запись очистит журнал профайлера."
+  },
+  "Start over": {
+    "value": "Начать заново"
+  },
+  "Use current": {
+    "value": "Взять текущую"
+  },
+  "Paste text with domains": {
+    "value": "Вставьте текст с доменами"
+  },
+  "A list, links or any text: domains are picked out of it": {
+    "value": "Список, ссылки или любой текст — домены будут извлечены"
+  },
+  "Extract": {
+    "value": "Извлечь"
+  },
+  "No domains found in the text": {
+    "value": "В тексте не найдено доменов"
+  },
+  "recorded": {
+    "value": "записан"
+  },
+  "from text": {
+    "value": "из текста"
+  },
+  "from rule set": {
+    "value": "из набора правил"
+  },
+  "Works direct": {
+    "value": "Работает напрямую"
+  },
+  "Only via proxy": {
+    "value": "Только через прокси"
+  },
+  "No response": {
+    "value": "Не отвечает"
+  },
+  "Pick domains": {
+    "value": "Подобрать домены"
+  },
+  "Add (%d)": {
+    "value": "Добавить (%d)"
+  },
+  "Record app": {
+    "value": "Записать приложение"
+  },
+  "Paste text": {
+    "value": "Вставить текст"
+  },
+  "From rule set": {
+    "value": "Из набора правил"
+  },
+  "Connections without a domain (IP only): %d — a domain rule will not catch them": {
+    "value": "Соединений без домена (только IP): %d — правило по домену их не поймает"
+  },
+  "Not downloaded, not checked: %s": {
+    "value": "Не скачаны, не проверены: %s"
+  },
+  "Groups: %d": {
+    "value": "Групп: %d"
+  },
+  "Check exits": {
+    "value": "Проверить выходы"
+  },
+  "Exit check needs the VPN to be connected": {
+    "value": "Для проверки выходов VPN должен быть подключён"
+  },
+  "Record an app, paste a list or take a rule set — the helper will fold the domains into rule entries and show which of your rules already match them.": {
+    "value": "Запишите приложение, вставьте список или возьмите набор правил — помощник свернёт домены в записи правила и покажет, какие из ваших правил их уже ловят."
+  },
+  "Recording: %s": {
+    "value": "Запись: %s"
+  },
+  "Switch to the app, do what should work (update, download, sign in), then come back and tap Done.": {
+    "value": "Переключитесь в приложение, сделайте то, что должно работать (обновление, загрузка, вход), затем вернитесь и нажмите «Готово»."
+  },
+  "VPN is not connected — nothing will be recorded.": {
+    "value": "VPN не подключён — ничего не запишется."
+  },
+  "Domains so far: %1$d · IP only: %2$d": {
+    "value": "Доменов: %1$d · только IP: %2$d"
+  },
+  "connections: %d": {
+    "value": "соединений: %d"
+  },
+  "suffix %s": {
+    "value": "суффикс %s"
+  },
+  "Already matched by rule «%1$s» → %2$s": {
+    "value": "Уже совпадает с правилом «%1$s» → %2$s"
+  },
+  "Suffix": {
+    "value": "Суффикс"
+  },
+  "Exact": {
+    "value": "Точно"
   }
 }
