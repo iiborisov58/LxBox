@@ -156,12 +156,14 @@ Profile активируется, пока условие истинно. Host �
 | `ACTIVE_GROUP_CHANGED` | `old_group`, `new_group`, `reason` | State | Сменилась активная группа |
 | `SUB_REFRESHED` | `sub_id`, `nodes_count`, `delta_count` | Subscription | Подписка обновилась |
 | `SUB_REFRESH_FAILED` | `sub_id`, `error` | Subscription | Подписка не обновилась (throttle 1/min на sub_id) |
+| `REACHABILITY_FAILED` | `checked`, `action` (`notify`/`resetNetwork`/`reconnect`/`none`) | Health | Проверка заблокированных сайтов через туннель провалилась: не ответил ни один из `checked` (opt-in, §721) |
+| `REACHABILITY_RESTORED` | `checked`, `reachable` | Health | Первая успешная проверка заблокированных сайтов после провала |
 
 ### Зарезервированные (namespace есть, источника пока нет)
 
 - `HEARTBEAT_FAILED` · `LATENCY_DEGRADED` · `UNATTRIBUTED_BURST` (категория
   **Health**) — имена зарезервированы, источника нет (health watchdog не
-  планируется), тумблера в UI нет.
+  планируется). Тумблер Health есть — для `REACHABILITY_*` выше.
 - `PERMISSION_NEEDED` (`permission`, категория **Lifecycle**) — зарезервировано
   под runtime-permission промпты; источника эмиссии пока нет.
 

@@ -83,6 +83,10 @@ class _Methods {
   static const openAppDetailsSettings = 'openAppDetailsSettings';
   static const areNotificationsEnabled = 'areNotificationsEnabled';
   static const openNotificationSettings = 'openNotificationSettings';
+  // §721 — проверка доступности заблокированных ресурсов
+  static const isScreenInteractive = 'isScreenInteractive';
+  static const showReachabilityAlert = 'showReachabilityAlert';
+  static const cancelReachabilityAlert = 'cancelReachabilityAlert';
   static const openVpnSettings = 'openVpnSettings';
 
   // Background mode

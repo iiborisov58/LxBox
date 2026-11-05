@@ -6991,5 +6991,79 @@
   },
   "Appears only while a Tailscale node has Allow Taildrop.": {
     "value": "Есть, только пока у узла Tailscale включён Allow Taildrop."
+  },
+  "Health": {
+    "value": "Состояние"
+  },
+  "Checking…": {
+    "value": "Проверка…"
+  },
+  "Last tick skipped: the screen was off": {
+    "value": "Последняя проверка пропущена: экран был выключен"
+  },
+  "Last tick skipped: the block lists are not downloaded yet": {
+    "value": "Последняя проверка пропущена: списки блокировок ещё не скачаны"
+  },
+  "Last tick skipped: the route sends everything direct": {
+    "value": "Последняя проверка пропущена: маршрут отправляет всё напрямую"
+  },
+  "Not checked yet": {
+    "value": "Ещё не проверялось"
+  },
+  "%1$s: %2$d of %3$d responded": {
+    "value": "%1$s: ответили %2$d из %3$d"
+  },
+  "%1$s: none of %2$d responded": {
+    "value": "%1$s: не ответил ни один из %2$d"
+  },
+  "Connect the VPN to run the check": {
+    "value": "Подключите VPN, чтобы запустить проверку"
+  },
+  "Only notify": {
+    "value": "Только уведомить"
+  },
+  "Reset network": {
+    "value": "Сбросить сеть"
+  },
+  "Blocked sites check": {
+    "value": "Проверка заблокированных сайтов"
+  },
+  "Every few minutes opens a few sites from the Russian block lists through the running tunnel and warns when none of them respond. Off by default: every check is real traffic and some battery.": {
+    "value": "Раз в несколько минут открывает через работающий туннель несколько сайтов из российских списков блокировок и предупреждает, если не ответил ни один. По умолчанию выключено: каждая проверка — реальный трафик и немного батареи."
+  },
+  "Check blocked sites": {
+    "value": "Проверять заблокированные сайты"
+  },
+  "%d min": {
+    "value": "%d мин"
+  },
+  "Sites per check": {
+    "value": "Сайтов за проверку"
+  },
+  "Timeout per site": {
+    "value": "Таймаут на сайт"
+  },
+  "%d s": {
+    "value": "%d с"
+  },
+  "On failure": {
+    "value": "При провале"
+  },
+  "Pause while the screen is off": {
+    "value": "Не проверять при выключенном экране"
+  },
+  "Blocked sites are not opening": {
+    "value": "Заблокированные сайты не открываются"
+  },
+  "The tunnel is connected, but none of the checked blocked sites responded through it.": {
+    "value": "Туннель подключён, но ни один из проверенных заблокированных сайтов через него не ответил."
+  },
+  "%d sites": {
+    "value": {
+      "one": "%d сайт",
+      "few": "%d сайта",
+      "many": "%d сайтов",
+      "other": "%d сайта"
+    }
   }
 }

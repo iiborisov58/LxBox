@@ -12,6 +12,7 @@ import '../../core_reject/core_reject_state.dart';
 import '../../error_humanize.dart';
 import '../../platform_channels.dart';
 import '../../../vpn/box_vpn_client.dart';
+import '../../reachability/reachability_monitor.dart';
 import '../../rule_set_downloader.dart';
 import '../../settings_storage.dart';
 import '../../update_checker.dart';
@@ -54,6 +55,7 @@ Future<DebugResponse> actionHandler(
     '/action/force-stop-vpn' => _forceStopVpn(ctx),
     '/action/set-transient-timeout' => _setTransientTimeout(req, ctx),
     '/action/reset-network' => _resetNetwork(ctx),
+    '/action/reachability-check' => _reachabilityCheck(),
     '/action/quic-knobs' => _quicKnobs(req),
     '/action/rebuild-config' => _rebuildConfig(ctx),
     '/action/refresh-subs' => _refreshSubs(req, ctx),
@@ -474,6 +476,19 @@ int? _parsePositiveMs(String? raw, String name) {
 Future<DebugResponse> _resetNetwork(DebugContext ctx) async {
   final ok = await automation.actionResetNetwork(ctx);
   return _ok('reset-network', {'native_ok': ok});
+}
+
+/// `POST /action/reachability-check` — §721: одна проверка доступности
+/// заблокированных ресурсов сейчас (ждёт результата). Требует Connected;
+/// работает и при выключенной фиче (ручной прогон), реакция на провал —
+/// по настройке.
+Future<DebugResponse> _reachabilityCheck() async {
+  try {
+    final st = await ReachabilityMonitor.I.runCheck();
+    return _ok('reachability-check', {'status': st.toJson()});
+  } on StateError {
+    throw const Conflict('tunnel not connected');
+  }
 }
 
 /// `POST /action/quic-knobs?gso=on|off[&ecn=on|off]` — §341: диагностические

@@ -143,6 +143,14 @@ The feature protects five principles:
 - **P17. Speed test measures in three phases.** Ping — trimmed mean of 5
   attempts, download — N parallel streams updated every 0.5 s, upload — 2
   streams; history — the last 10 runs of the session. `no witness`.
+- **P18. The blocked-sites check is opt-in and never resurrects a stopped
+  tunnel.** Off by default; runs only while Connected, through the live core by
+  the `route.final` tag; fails only if none of the N sampled sites answered; a
+  `resetNetwork`/reconnect reaction is at most once per interval and is
+  cancelled by any transition to down. **Witness**: units "explicit Stop during
+  the check — no reconnect", "at least one of N — success", "reset once per
+  interval", "keyword/regex dropped". **Mutation**: the reaction runs after
+  Stop.
 
 ## Controlled parameters
 
@@ -159,6 +167,7 @@ The feature protects five principles:
 | ✨auto: Test URL / interval / tolerance | URL; `30s`…`30m`; 10…200 ms | `cp.cloudflare.com/generate_204` / `15m` / 30 | template group ✨auto |
 | URLTest of a Direction and of an auto-select node | see [urltest-group](FUNCTIONS/urltest-group.md) | interval `15m`, tolerance 50, idle `30m`, `least_test` | their own groups |
 | Speed test: server / streams | 10 template servers; 1 / 4 / 10 | Cloudflare / 4 | Speed Test screen |
+| Blocked sites check: on / interval / sites / timeout / on failure / pause with screen off | off·on; 5/15/30/60 min; 3–5; 3/5/10 s; notify·reset network·reconnect; on·off | off / 15 min / 3 / 5 s / notify / on | see [blocked-reachability](FUNCTIONS/blocked-reachability.md) |
 
 ### Core config keys (group `urltest`)
 
@@ -250,6 +259,7 @@ rejection:   Start → core start → rejection names the node → disable + ver
 | Node diagnostics | Sends one HTTP request through a node to a chosen service and shows the raw reply, without switching the active node. | P13 | [node-diagnostics.md](FUNCTIONS/node-diagnostics.md) |
 | Auto-disable of nodes rejected by the core | Disables nodes the core rejects at start, keeps the core's verbatim reason as a verdict and reports them in a banner. | P14–P16 | [core-reject-auto-disable.md](FUNCTIONS/core-reject-auto-disable.md) |
 | Speed test | Measures ping, download and upload of the device's current path, through the tunnel when the VPN is up. | P17 | [speed-test.md](FUNCTIONS/speed-test.md) |
+| Blocked sites check | Opt-in: periodically opens a few sites from the block lists through the live core and reacts when none respond. | P18 | [blocked-reachability.md](FUNCTIONS/blocked-reachability.md) |
 
 ## Related features
 

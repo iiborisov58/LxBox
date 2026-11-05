@@ -3,6 +3,7 @@ import '../../../models/dns_ref.dart';
 import '../../../models/record_codec.dart';
 import '../../l10n/locale_controller.dart';
 import '../../vpn_settings/vpn_settings_facade.dart';
+import '../../reachability/reachability_monitor.dart';
 import '../../settings_storage.dart';
 import '../context.dart';
 import '../contract/errors.dart';
@@ -28,6 +29,8 @@ import '_shared.dart';
 /// - `GET|PUT /settings/vpn/keep_on_exit`        body `{"enabled":bool}`
 /// - `GET|PUT /settings/vpn/background_mode`     body `{"mode":"never|lazy|always"}`
 /// - `GET|PUT /settings/node_budget`             body `{"value":int|null}`
+/// - `GET|PUT /settings/reachability`            §721, частичный body
+///   `{"enabled","interval_min","sample","timeout_s","skip_screen_off","on_fail"}`
 /// - `POST   /settings/rebuild-config`          alias `/action/rebuild-config`
 ///
 /// Все `PUT`/`POST` принимают `?rebuild=true`.
@@ -78,6 +81,11 @@ Future<DebugResponse> settingsHandler(DebugRequest req, DebugContext ctx) async 
     case '/settings/core_logs_verbose':
       if (req.method == 'GET') return _getCoreLogsVerbose();
       if (req.method == 'PUT') return _putCoreLogsVerbose(req);
+      throw _methodNotAllowed(req.method, path);
+
+    case '/settings/reachability':
+      if (req.method == 'GET') return _getReachability();
+      if (req.method == 'PUT') return _putReachability(req);
       throw _methodNotAllowed(req.method, path);
 
     case '/settings/node_budget':
@@ -551,6 +559,35 @@ Future<DebugResponse> _putNodeBudget(DebugRequest req) async {
   final v = await SettingsStorage.getNodeBudget();
   return JsonResponse(
       {'ok': true, 'action': 'settings-node-budget', 'value': v});
+}
+
+/// `GET /settings/reachability` — §721: настройки и итог последней проверки.
+Future<DebugResponse> _getReachability() async {
+  final m = ReachabilityMonitor.I;
+  return JsonResponse({
+    'ok': true,
+    'settings': m.settings.toJson(),
+    'status': m.status.toJson(),
+    'running': m.running,
+  });
+}
+
+/// `PUT /settings/reachability` — §721: частичное обновление; значения вне
+/// допустимых наборов → 400.
+Future<DebugResponse> _putReachability(DebugRequest req) async {
+  final body = req.jsonBodyAsMap();
+  final ReachabilitySettings next;
+  try {
+    next = ReachabilityMonitor.I.settings.mergeJson(body);
+  } on FormatException catch (e) {
+    throw BadRequest(e.message);
+  }
+  await ReachabilityMonitor.I.updateSettings(next);
+  return JsonResponse({
+    'ok': true,
+    'action': 'settings-reachability',
+    'settings': next.toJson(),
+  });
 }
 
 // ---------------------------------------------------------------------------

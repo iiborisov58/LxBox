@@ -20,6 +20,10 @@ class ServiceNotification(private val service: Service) {
         /// а сказать юзеру надо — UI-процесса при sticky-рестарте нет.
         private const val ALERT_NOTIFICATION_ID = 2
 
+        /// §721 — «заблокированное не открывается»: своё уведомление, чтобы
+        /// не затирать ошибку старта (id=2) и сниматься отдельно.
+        private const val REACHABILITY_NOTIFICATION_ID = 3
+
         /// §279 — идемпотентный (пере)сабмит канала. createNotificationChannel
         /// с тем же id обновляет имя/описание (документированный rename-путь) —
         /// зовётся из init и из L10n.refreshSurfaces при смене языка.
@@ -68,7 +72,21 @@ class ServiceNotification(private val service: Service) {
         /// и без сервиса (зовётся и из VpnWatchdogReceiver). Без
         /// POST_NOTIFICATIONS (API 33+) система молча его не покажет — это
         /// допустимо: сервис в любом случае остановлен, шторм прерван.
-        fun showAlert(ctx: Context, title: String, text: String) {
+        fun showAlert(ctx: Context, title: String, text: String) =
+            showAlert(ctx, title, text, ALERT_NOTIFICATION_ID)
+
+        /// §721 — тексты приходят из Dart уже локализованными.
+        fun showReachabilityAlert(ctx: Context, title: String, text: String) =
+            showAlert(ctx, title, text, REACHABILITY_NOTIFICATION_ID)
+
+        fun cancelReachabilityAlert(ctx: Context) {
+            runCatching {
+                (ctx.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager)
+                    .cancel(REACHABILITY_NOTIFICATION_ID)
+            }
+        }
+
+        private fun showAlert(ctx: Context, title: String, text: String, id: Int) {
             createChannel(ctx)
             val openIntent = ctx.packageManager.getLaunchIntentForPackage(ctx.packageName)
             val builder = NotificationCompat.Builder(ctx, CHANNEL_ID)
@@ -87,7 +105,7 @@ class ServiceNotification(private val service: Service) {
             }
             runCatching {
                 (ctx.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager)
-                    .notify(ALERT_NOTIFICATION_ID, builder.build())
+                    .notify(id, builder.build())
             }
         }
 

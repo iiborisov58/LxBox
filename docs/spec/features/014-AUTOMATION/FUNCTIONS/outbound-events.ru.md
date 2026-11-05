@@ -41,6 +41,8 @@
 | `ACTIVE_GROUP_CHANGED` | `old_group`, `new_group`, `reason` | State | выбрана другая группа |
 | `SUB_REFRESHED` | `sub_id`, `nodes_count`, `delta_count` | Subscription | подписка обновилась |
 | `SUB_REFRESH_FAILED` | `sub_id`, `error` | Subscription | подписка не обновилась или дала 0 узлов |
+| `REACHABILITY_FAILED` | `checked`, `action` (`notify`/`resetNetwork`/`reconnect`/`none`) | Health | Проверка заблокированных сайтов через туннель провалилась: не ответил ни один из `checked` |
+| `REACHABILITY_RESTORED` | `checked`, `reachable` | Health | Первая успешная проверка заблокированных сайтов после провала |
 
 ## Входы / Выходы
 
@@ -78,8 +80,9 @@
 - Смена узла автоматикой группы (URL-тест, fallback) события не даёт — только
   явный выбор.
 - Health (`HEARTBEAT_FAILED`, `LATENCY_DEGRADED`, `UNATTRIBUTED_BURST`) и
-  `PERMISSION_NEEDED` — зарезервированы, источника нет; тумблера категории
-  Health нет.
+  `PERMISSION_NEEDED` — зарезервированы, источника нет. Тумблер Health гейтит
+  `REACHABILITY_*` от проверки заблокированных сайтов (§721); в extras —
+  счётчики и имя реакции, без хостов и адресов.
 - События отправляет интерфейс приложения; пока он не загружен, события не
   уходят, даже если туннель меняет статус.
 - Зависит от возможностей ОС: доставка широковещательных событий подписчику.
@@ -96,3 +99,4 @@
 | 6 | [290](../../../tasks/290-automation-node-switch-gaps.md) | complete | `NODE_ALREADY_ACTIVE`, `VPN_ERROR` на провал команды, подсказка «включите обе категории» |
 | 7 | [605](../../../tasks/605-service-live-automation-workspaces-bugs.md) | Реализовано | Мёртвый тумблер Health убран; код `switch_failed` |
 | 8 | [638](../../../tasks/638-audit-591-four-defects.md) | Done | `VPN_ERROR(tunnel_error)` маскирует адреса в `message` (P14) |
+| 9 | [721](../../../tasks/721-blocked-reachability-check.md) | Реализовано | `REACHABILITY_FAILED` / `REACHABILITY_RESTORED` — первый источник Health; тумблер Health вернулся |

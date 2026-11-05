@@ -96,6 +96,10 @@ class RuleSetMeta {
 /// сам ничего не скачивает. В сеть за рулсетами ходит **только приложение** —
 /// либо явно (☁/⟳ юзера), либо авто-обновлением по TTL (§366,
 /// `RuleSetAutoUpdater`), но никогда ядро и никогда в фоне.
+/// §721 — префикс `cacheId` наборов проверки доступности (`ReachabilityMonitor`):
+/// [RuleSetDownloader.pruneOrphans] их не удаляет.
+const String kReachabilityCachePrefix = 'reachability__';
+
 class RuleSetDownloader {
   RuleSetDownloader._();
 
@@ -409,6 +413,9 @@ class RuleSetDownloader {
           continue;
         }
         if (activeCacheIds.contains(id)) continue;
+        // §721 — наборы проверки доступности не входят в правила маршрута,
+        // но принадлежат приложению: не сироты.
+        if (id.startsWith(kReachabilityCachePrefix)) continue;
         try {
           await entity.delete();
           pruned++;

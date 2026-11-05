@@ -6700,5 +6700,76 @@
   },
   "Appears only while a Tailscale node has Allow Taildrop.": {
     "value": "仅当 Tailscale 节点启用 Allow Taildrop 时显示。"
+  },
+  "Health": {
+    "value": "健康"
+  },
+  "Checking…": {
+    "value": "正在检查…"
+  },
+  "Last tick skipped: the screen was off": {
+    "value": "上次检查已跳过：屏幕处于关闭状态"
+  },
+  "Last tick skipped: the block lists are not downloaded yet": {
+    "value": "上次检查已跳过：封锁列表尚未下载"
+  },
+  "Last tick skipped: the route sends everything direct": {
+    "value": "上次检查已跳过：路由将所有流量直连"
+  },
+  "Not checked yet": {
+    "value": "尚未检查"
+  },
+  "%1$s: %2$d of %3$d responded": {
+    "value": "%1$s：%3$d 个中有 %2$d 个响应"
+  },
+  "%1$s: none of %2$d responded": {
+    "value": "%1$s：%2$d 个均无响应"
+  },
+  "Connect the VPN to run the check": {
+    "value": "请先连接 VPN 再运行检查"
+  },
+  "Only notify": {
+    "value": "仅通知"
+  },
+  "Reset network": {
+    "value": "重置网络"
+  },
+  "Blocked sites check": {
+    "value": "被封锁网站检查"
+  },
+  "Every few minutes opens a few sites from the Russian block lists through the running tunnel and warns when none of them respond. Off by default: every check is real traffic and some battery.": {
+    "value": "每隔几分钟通过正在运行的隧道打开俄罗斯封锁列表中的几个网站，若均无响应则发出提醒。默认关闭：每次检查都会产生真实流量并消耗少量电量。"
+  },
+  "Check blocked sites": {
+    "value": "检查被封锁的网站"
+  },
+  "%d min": {
+    "value": "%d 分钟"
+  },
+  "Sites per check": {
+    "value": "每次检查的网站数"
+  },
+  "Timeout per site": {
+    "value": "每个网站的超时"
+  },
+  "%d s": {
+    "value": "%d 秒"
+  },
+  "On failure": {
+    "value": "失败时"
+  },
+  "Pause while the screen is off": {
+    "value": "屏幕关闭时暂停"
+  },
+  "Blocked sites are not opening": {
+    "value": "被封锁的网站无法打开"
+  },
+  "The tunnel is connected, but none of the checked blocked sites responded through it.": {
+    "value": "隧道已连接，但所检查的被封锁网站均未通过隧道响应。"
+  },
+  "%d sites": {
+    "value": {
+      "other": "%d 个网站"
+    }
   }
 }

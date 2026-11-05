@@ -174,8 +174,10 @@ tile touch / menu item / command / plugin
   watches and car interfaces; an SDK for third-party developers; a filter of
   "trusted" senders.
 - Health events (`HEARTBEAT_FAILED`, `LATENCY_DEGRADED`, `UNATTRIBUTED_BURST`)
-  and `PERMISSION_NEEDED` — the names are reserved, there is no source; the
-  Health category has no toggle in the settings.
+  and `PERMISSION_NEEDED` — the names are reserved, there is no source. The
+  Health category's only source is the blocked-sites check
+  (`REACHABILITY_FAILED` / `REACHABILITY_RESTORED`,
+  [009 → blocked-reachability](../009-NODE_HEALTH/FUNCTIONS/blocked-reachability.md), §721).
 - Commands other than start/stop/toggle, and all events, require a live app;
   with the UI unloaded the command is skipped without an answer.
 - `ACTIVE_NODE_CHANGED` comes only on an explicit node choice, `reason` is

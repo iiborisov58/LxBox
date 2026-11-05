@@ -618,6 +618,38 @@ class BoxVpnClient {
     return ok ?? false;
   }
 
+  /// §721 — экран включён (`PowerManager.isInteractive`). На таймауте —
+  /// `true`: лучше лишняя проверка, чем молча выключенная.
+  Future<bool> isScreenInteractive() async {
+    final ok = await _invoke<bool>(
+      _Methods.isScreenInteractive,
+      timeout: _Timeouts.settings,
+      onTimeoutValue: true,
+    );
+    return ok ?? true;
+  }
+
+  /// §721 — уведомление «заблокированное не открывается» (свой id, не
+  /// затирает ошибку старта). Тексты — уже локализованные.
+  /// No-throw: уведомление — побочный эффект проверки, ронять её нельзя.
+  Future<void> showReachabilityAlert(String title, String text) =>
+      _invoke<bool>(
+        _Methods.showReachabilityAlert,
+        args: {'title': title, 'text': text},
+        timeout: _Timeouts.settings,
+        onTimeoutValue: false,
+      ).then((_) {}, onError: (Object e) {
+        AppLog.I.warning('[reachability] alert failed: $e');
+      });
+
+  Future<void> cancelReachabilityAlert() => _invoke<bool>(
+        _Methods.cancelReachabilityAlert,
+        timeout: _Timeouts.settings,
+        onTimeoutValue: false,
+      ).then((_) {}, onError: (Object e) {
+        AppLog.I.warning('[reachability] alert cancel failed: $e');
+      });
+
   /// Open per-app notification settings (API 26+).
   Future<bool> openNotificationSettings() async {
     final ok = await _invoke<bool>(
