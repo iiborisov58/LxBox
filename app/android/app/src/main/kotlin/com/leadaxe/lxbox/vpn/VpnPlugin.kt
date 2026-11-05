@@ -694,6 +694,21 @@ class VpnPlugin : FlutterPlugin, MethodChannel.MethodCallHandler, ActivityAware,
                     primaryWithPackage = true,
                 ))
             }
+            "isScreenInteractive" -> {
+                // §721 — гейт проверки доступности «не при выключенном экране».
+                val pm = context.getSystemService(Context.POWER_SERVICE) as android.os.PowerManager
+                result.success(pm.isInteractive)
+            }
+            "showReachabilityAlert" -> {
+                val alertTitle = call.argument<String>("title") ?: ""
+                val alertText = call.argument<String>("text") ?: ""
+                ServiceNotification.showReachabilityAlert(context, alertTitle, alertText)
+                result.success(true)
+            }
+            "cancelReachabilityAlert" -> {
+                ServiceNotification.cancelReachabilityAlert(context)
+                result.success(true)
+            }
             "areNotificationsEnabled" -> {
                 result.success(androidx.core.app.NotificationManagerCompat.from(context).areNotificationsEnabled())
             }

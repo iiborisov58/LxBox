@@ -139,11 +139,22 @@ class AutomationEventEmitter {
         throttleKey: 'SUB_REFRESH_FAILED:$subId',
       );
 
-  // ─── Health (reserved) ──────────────────────────────────────────────────────
+  // ─── Health ─────────────────────────────────────────────────────────────────
   //
-  // Namespace зарезервирован спекой §047; источника нет (042F won't-fix).
-  // §605 — тумблера в UI нет, гейт `_healthEnabled` читается из хранилища
-  // (старые бэкапы с ключом не ломаются).
+  // §721 — первый источник категории: проверка доступности заблокированных
+  // ресурсов (opt-in). HEARTBEAT_FAILED / LATENCY_DEGRADED по-прежнему только
+  // зарезервированы (042F won't-fix). Extras — счётчики и wire-имя реакции,
+  // без хостов и адресов (P14 014).
+
+  void emitReachabilityFailed(int checked, String action) => _emit(
+      'REACHABILITY_FAILED',
+      {'checked': checked, 'action': action},
+      _healthEnabled);
+
+  void emitReachabilityRestored(int checked, int reachable) => _emit(
+      'REACHABILITY_RESTORED',
+      {'checked': checked, 'reachable': reachable},
+      _healthEnabled);
 
   void emitHeartbeatFailed(int consecutiveFails) =>
       _emit('HEARTBEAT_FAILED', {'fails': consecutiveFails}, _healthEnabled);

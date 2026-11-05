@@ -141,6 +141,8 @@ POST /action/clear-error                       Dismiss the lastError banner
 POST /action/reset-network                     Light recovery: closeAllConnections + DNS flush + dialer
                                                   rebind. WITHOUT recreating box/Service/TUN. Spec 031.
                                                   Requires tunnel up. → {"ok":true,"action":"reset-network","native_ok":<bool>}
+POST /action/reachability-check                §721: one blocked-sites check now (waits). Requires tunnel up (409).
+                                                  → {"ok":true,"action":"reachability-check","status":{at,ok,checked,reachable,action,skipped}}
 POST /action/quic-knobs?gso=on|off&ecn=on|off  §341: quic-go env knobs (QUIC_GO_DISABLE_GSO/ECN) via static
                                                   Libbox call. off = force-disable offload/marking, on = library
                                                   auto-detect. Affects NEW QUIC sockets only — follow with
@@ -625,6 +627,9 @@ GET|PUT /settings/enabled_groups               body {"groups":["tag",...]} (conf
 GET|PUT /settings/vpn_mode                     body partial {mode,proxy_protocol,proxy_port,proxy_listen,proxy_auth,proxy_user,proxy_pass} (?rebuild)
 GET|PUT /settings/ping_options                 URLTest defaults. body partial {url?,timeout_ms?,groups?} (groups = per-group overrides map)
 GET|PUT|DELETE /settings/ping_options/groups/{tag}  Per-group URLTest override. PUT body {url?,timeout_ms?} (≥1 required); DELETE clears
+GET|PUT /settings/reachability                §721 blocked-sites check. GET → {settings,status,running}; PUT partial
+                                                  {enabled,interval_min:5|15|30|60,sample:3|4|5,timeout_s:3|5|10,
+                                                  skip_screen_off,on_fail:notify|resetNetwork|reconnect}
 GET|PUT /settings/tun_apps                     Per-app tunnel list. body {"mode":"off|allow|deny","packages":["pkg",...]} (config-significant, ?rebuild)
 PUT    /settings/vars/{key}                    body {"value":"..."}; blocklist: debug_token/debug_enabled/debug_port
 DELETE /settings/vars/{key}                    Delete var
@@ -767,6 +772,7 @@ const Map<String, dynamic> _capabilityJson = {
     {'method': 'POST', 'path': '/action/force-stop-vpn', 'description': 'Hard force-stop (doForceStop path): teardown→stopSelf, frees CommandServer port 63130. fire-and-forget.'},
     {'method': 'POST', 'path': '/action/set-transient-timeout', 'params': {'connecting': 'ms (optional)', 'stopping': 'ms (optional)'}, 'description': 'Override transient-timeout thresholds (ms) for on-device force-stop test. At least one param.'},
     {'method': 'POST', 'path': '/action/reset-network', 'description': 'Light recovery: closeAll + DNS flush + dialer rebind (spec 031). Requires tunnel up.'},
+    {'method': 'POST', 'path': '/action/reachability-check', 'description': '§721: one blocked-sites check through the live tunnel now (waits for the result). Requires tunnel up.'},
     {'method': 'POST', 'path': '/action/quic-knobs', 'params': {'gso': 'on|off (optional)', 'ecn': 'on|off (optional)'}, 'description': '§341: quic-go env knobs (GSO/ECN) via static Libbox call; affects new QUIC sockets, follow with reload-vpn/reset-network. At least one param.'},
     {'method': 'POST', 'path': '/action/urltest', 'params': {'tag': 'node tag (single)', 'group': 'group tag (group urltest, URL-encode emoji)', 'all': 'true (mass urltest)', 'cancel': '1 (abort in-flight mass urltest)'}, 'description': 'URLTest dispatch by query: one of tag/group/all/cancel'},
     {'method': 'POST', 'path': '/action/urltest-all', 'description': 'Group URLTest of every urltest group, sequential, fire-and-forget (requires tunnel) → {ok,action,groups}'},
@@ -900,6 +906,7 @@ const Map<String, dynamic> _capabilityJson = {
     {'method': 'GET|PUT', 'path': '/settings/vpn_mode', 'body': 'partial {mode,proxy_protocol,proxy_port,proxy_listen,proxy_auth,proxy_user,proxy_pass}', 'description': 'VPN/proxy mode (config-significant, ?rebuild)'},
     {'method': 'GET|PUT', 'path': '/settings/ping_options', 'body': 'partial {url?,timeout_ms?,groups?}', 'description': 'URLTest defaults (groups = per-group overrides map)'},
     {'method': 'GET|PUT|DELETE', 'path': '/settings/ping_options/groups/{tag}', 'body': '{url?,timeout_ms?} (PUT, ≥1 required)', 'description': 'Per-group URLTest override; DELETE clears it'},
+    {'method': 'GET|PUT', 'path': '/settings/reachability', 'body': '{"enabled":bool,"interval_min":5|15|30|60,"sample":3|4|5,"timeout_s":3|5|10,"skip_screen_off":bool,"on_fail":"notify|resetNetwork|reconnect"} (partial)', 'description': '§721 blocked-sites check settings; GET also returns the last status'},
     {'method': 'GET|PUT', 'path': '/settings/tun_apps', 'body': '{"mode":"off|allow|deny","packages":["pkg",...]}', 'description': 'Per-app tunnel list (config-significant, ?rebuild)'},
     {'method': 'PUT', 'path': '/settings/vars/{key}', 'body': '{"value":"..."}', 'description': 'Set var (blocklist: debug_token/debug_enabled/debug_port)'},
     {'method': 'DELETE', 'path': '/settings/vars/{key}', 'description': 'Delete var'},

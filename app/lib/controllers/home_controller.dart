@@ -21,6 +21,7 @@ import '../services/settings_storage.dart';
 import '../services/support/support_message.dart';
 import '../services/template_loader.dart';
 import '../services/haptic_service.dart';
+import '../services/reachability/reachability_monitor.dart';
 import '../services/rule_set_auto_updater.dart';
 import '../services/subscription/auto_updater.dart';
 import '../services/core_reject/core_reject_state.dart';
@@ -245,6 +246,15 @@ class HomeController extends ChangeNotifier
     await _loadSavedConfig();
     await refreshDirectionLabels(); // §125 — labels для home-dropdown
     await reloadPingOptions();
+    // §721 — проверка доступности заблокированных ресурсов (opt-in): связь с
+    // туннелем и настройки — до первого статуса, его connected её взводит.
+    ReachabilityMonitor.I.bind(ReachabilityHost(
+      tunnelConnected: () => _state.tunnel == TunnelStatus.connected,
+      routeFinalTag: () => RouteConfig.finalTag(_state.activeConfigRaw),
+      resetNetwork: _vpn.resetNetwork,
+      reconnect: reconnect,
+    ));
+    await ReachabilityMonitor.I.init();
     _statusSub = _vpn.onStatusChanged.listen(_handleStatusEvent);
     // Native шлёт broadcast только на переходы. Если Flutter-процесс умер,
     // а foreground-service выжил (keep-on-exit), при reattach мы не узнаём
@@ -565,6 +575,10 @@ class HomeController extends ChangeNotifier
       _autoUpdater?.onVpnConnected();
       // §366 — проверка TTL rule-set'ов через 30с после connected.
       _ruleSetAutoUpdater?.onVpnConnected();
+      // §721 — на дубле connected таймер не перезапускаем.
+      if (prevTunnel != TunnelStatus.connected) {
+        ReachabilityMonitor.I.onTunnelConnected();
+      }
       unawaited(_scheduleAutoPing());
       // §047 — outgoing lifecycle event (gated, default OFF).
       AutomationEventEmitter.I.emitVpnConnected();
@@ -595,6 +609,9 @@ class HomeController extends ChangeNotifier
         return;
       }
       _stopHeartbeat();
+      // §721 — туннель down (явный Stop в том числе): проверки и реакции
+      // отменяются, явный Stop не воскрешается.
+      ReachabilityMonitor.I.onTunnelDown();
       // §498 — плашка страховки сообщает о прошедшем старте; при Stop/Disconnected
       // уходит сама. Вердикты на узлах не снимаются.
       CoreRejectState.I.dismissBanner();

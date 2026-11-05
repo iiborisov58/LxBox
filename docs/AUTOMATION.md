@@ -161,12 +161,14 @@ corresponding category is enabled in the Emit settings.
 | `ACTIVE_GROUP_CHANGED` | `old_group`, `new_group`, `reason` | State | The active group changed |
 | `SUB_REFRESHED` | `sub_id`, `nodes_count`, `delta_count` | Subscription | A subscription refreshed |
 | `SUB_REFRESH_FAILED` | `sub_id`, `error` | Subscription | A subscription failed to refresh (throttled to 1/min per sub_id) |
+| `REACHABILITY_FAILED` | `checked`, `action` (`notify`/`resetNetwork`/`reconnect`/`none`) | Health | A blocked-sites check through the tunnel failed: none of `checked` sites responded (opt-in feature, §721) |
+| `REACHABILITY_RESTORED` | `checked`, `reachable` | Health | The first successful blocked-sites check after a failure |
 
 ### Reserved (the namespace exists, the source does not yet)
 
 - `HEARTBEAT_FAILED` · `LATENCY_DEGRADED` · `UNATTRIBUTED_BURST` (category
   **Health**) — the names are reserved, there is no source (the health watchdog
-  is not planned) and no toggle in the UI.
+  is not planned). The Health toggle exists for `REACHABILITY_*` above.
 - `PERMISSION_NEEDED` (`permission`, category **Lifecycle**) — reserved for
   runtime-permission prompts; nothing emits it yet.
 
