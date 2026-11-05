@@ -6771,5 +6771,83 @@
     "value": {
       "other": "%d 个网站"
     }
+  },
+  "Mixed": {
+    "value": "混合"
+  },
+  "Find rule set": {
+    "value": "查找规则集"
+  },
+  "Refresh list": {
+    "value": "刷新列表"
+  },
+  "Name, e.g. youtube or ru-blocked": {
+    "value": "名称，例如 youtube 或 ru-blocked"
+  },
+  "%1$s: list unavailable (%2$s)": {
+    "value": "%1$s：列表不可用（%2$s）"
+  },
+  "Shown %1$d of %2$d": {
+    "value": "显示 %1$d / %2$d"
+  },
+  "Found: %d": {
+    "value": "找到：%d"
+  },
+  "list from %s": {
+    "value": "列表获取于：%s"
+  },
+  "Nothing found": {
+    "value": "未找到"
+  },
+  "Not a valid rule set: %s": {
+    "value": "不是有效的规则集：%s"
+  },
+  "Download failed: %s": {
+    "value": "下载失败：%s"
+  },
+  "Not found in this file": {
+    "value": "此文件中未找到"
+  },
+  "Found: domain %s": {
+    "value": "已找到：域名 %s"
+  },
+  "Found: domain suffix %s": {
+    "value": "已找到：域名后缀 %s"
+  },
+  "Found: keyword %s": {
+    "value": "已找到：关键词 %s"
+  },
+  "Found: regex %s": {
+    "value": "已找到：正则 %s"
+  },
+  "Found: IP range %s": {
+    "value": "已找到：IP 范围 %s"
+  },
+  "Check file": {
+    "value": "检查文件"
+  },
+  "Use": {
+    "value": "使用"
+  },
+  "Domains: %d": {
+    "value": "域名：%d"
+  },
+  "Domain suffixes: %d": {
+    "value": "域名后缀：%d"
+  },
+  "Keywords: %d": {
+    "value": "关键词：%d"
+  },
+  "Regex: %d": {
+    "value": "正则：%d"
+  },
+  "IPv4 ranges: %d": {
+    "value": "IPv4 范围：%d"
+  },
+  "IPv6 ranges: %d": {
+    "value": "IPv6 范围：%d"
+  },
+  "Domain or IP": {
+    "value": "域名或 IP"
   }
 }

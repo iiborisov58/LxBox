@@ -38,6 +38,7 @@ class SrsIpRange {
   }
 
   String get fromText => _ipText(from);
+  String get toText => _ipText(to);
 
   static String _ipText(Uint8List b) {
     if (b.length == 4) return b.join('.');

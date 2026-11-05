@@ -117,6 +117,8 @@ List<File> _sections() {
       .where((f) => f.path.endsWith('.json'))
       .where((f) => !f.path.endsWith('registry_mapper.schema.json'))
       .where((f) => !f.path.endsWith('source_kinds.json'))
+      // §723 — черновик реестра источников .srs, не секция.
+      .where((f) => !f.path.endsWith('rule_set_sources.json'))
       .toList()
     ..sort((a, b) => a.path.compareTo(b.path));
 }

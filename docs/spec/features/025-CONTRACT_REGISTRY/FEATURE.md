@@ -142,6 +142,12 @@ Registry composition shipped in the build: `VERSION`; `registry/` — `allowlist
 `containers`, `dialer`, `limits`, `multiplex`, `presets`, `source_kinds`, `tls`, `transports`,
 `vars`, `warnings`; `registry/protocols/` — one file per scheme.
 
+Registry draft: `assets/contract_draft/rule_set_sources.json` (§723, `.srs` sources for the set
+finder) — shaped as a `registry/` entry, but the launcher contract does not have it yet, so it is
+kept out of the mirror and the copy (`check_contract_lock` checks them against the lock). The loader
+reads `registry/rule_set_sources.json` once a bump brings it, and only otherwise the draft;
+`rule_set_sources_test.dart` requires the file to be in exactly one place.
+
 | Scheme | Core `type` | Kind | Accepted from |
 |---|---|---|---|
 | `anytls` | `anytls` | outbound | link, sing-box JSON |
