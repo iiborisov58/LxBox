@@ -127,8 +127,11 @@ class HomeControls extends StatelessWidget {
                       : Icons.play_arrow_rounded,
                   size: 20,
                 ),
+                // §722 — форма 1: на главной Start/Stop остаются английскими
+                // (62a2c04e: русские слова не влезали в кнопку); в прочих
+                // местах «Stop» переводится.
                 label: Text(state.tunnelUp
-                    ? getLocalText.s("Stop")
+                    ? getLocalText.s(1, "Stop")
                     // Фича 478 — во время тихого цикла кнопка говорит, чем
                     // занята и сколько уже выключено; отмена доступна всегда.
                     : checking

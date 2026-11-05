@@ -651,7 +651,7 @@ class _OutboundViewScreenState extends State<OutboundViewScreen> {
     if (st == CcEndpointState.disabled) return getLocalText.s("off");
     final idle = hs.endpointIdleSince[widget.tag];
     if (st == CcEndpointState.asleep && idle != null && idle > 0) {
-      return '$st · idle for $idle s';
+      return getLocalText.s("%1\$s · idle for %2\$d s", st, idle);
     }
     return st;
   }

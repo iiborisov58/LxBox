@@ -649,12 +649,11 @@ class _UrlCheckTabState extends State<UrlCheckTab>
   }
 
   /// Возраст записи кэша: секунды до 2 мин, минуты до 2 ч, дальше часы.
-  // l10n-exempt: units
   static String _ageText(int sec) => sec < 120
-      ? '$sec s'
+      ? getLocalText.s("%d s", sec)
       : sec < 7200
-          ? '${sec ~/ 60} min'
-          : '${sec ~/ 3600} h';
+          ? getLocalText.s("%d min", sec ~/ 60)
+          : getLocalText.s("%d h", sec ~/ 3600);
 
   String? _sourceText(TestStage s) {
     switch (s.attr('source')) {

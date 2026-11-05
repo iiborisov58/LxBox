@@ -611,7 +611,7 @@
     "value": "Добавить адрес"
   },
   "Android identifies these apps by one UID. Routing rules and Tunnel apps apply to all of them at once.": {
-    "value": "Android различает эти приложения по одному UID. Правила маршрутизации и Tunnel apps действуют на все сразу."
+    "value": "Android различает эти приложения по одному UID. Правила маршрутизации и «Приложения туннеля» действуют на все сразу."
   },
   "Answer": {
     "value": "Ответ"
@@ -2891,7 +2891,7 @@
     "value": "Как это работает: Направления, правила, DNS, detour, рецепты"
   },
   "INBOUND": {
-    "value": "INBOUND"
+    "value": "ВХОДЯЩИЙ ИНТЕРФЕЙС"
   },
   "IP": {
     "value": "IP"
@@ -3459,7 +3459,7 @@
     "value": "Отчётов OOM нет"
   },
   "No Tailscale nodes yet — add one on the Servers screen first": {
-    "value": "Узлов Tailscale пока нет — сначала добавьте узел на экране Servers"
+    "value": "Узлов Tailscale пока нет — сначала добавьте узел на экране «Серверы»"
   },
   "No SSID filter — rule is active on any Wi-Fi network.": {
     "value": "Фильтра по SSID нет — правило активно в любой сети Wi-Fi."
@@ -3683,7 +3683,7 @@
     "value": "Этим узлом нельзя поделиться ссылкой."
   },
   "down": {
-    "value": "down"
+    "value": "нет связи"
   },
   "Layout": {
     "value": "Компоновка"
@@ -3698,7 +3698,7 @@
     "value": "Показывать список узлов в две колонки, когда ширина окна не меньше 600 dp (планшеты, альбомная ориентация, разделённый экран)."
   },
   "sleep": {
-    "value": "sleep"
+    "value": "сон"
   },
   "Tile added to Quick Settings.": {
     "value": "Плитка добавлена в быстрые настройки."
@@ -3716,7 +3716,7 @@
     "value": "неизвестная ошибка"
   },
   "up": {
-    "value": "up"
+    "value": "на связи"
   },
   "Node \"%1$s\" was dropped: its relay \"%2$s\" is missing, unusable or loops. Connecting directly would have bypassed the relay.": {
     "value": "Узел «%1$s» отброшен: релей «%2$s» отсутствует, непригоден или зациклен. Прямое подключение прошло бы мимо релея."
@@ -4570,10 +4570,10 @@
     "value": "SSID"
   },
   "START": {
-    "value": "START"
+    "value": "СТАРТ"
   },
   "STOP": {
-    "value": "STOP"
+    "value": "СТОП"
   },
   "Save": {
     "value": "Сохранить"
@@ -4901,7 +4901,7 @@
     "value": "Включите VPN, чтобы замерить эту цепочку: её хопы существуют только в работающем ядре."
   },
   "Start timed out after %1$d s (post-start did not finish, %2$d endpoints)": {
-    "value": "Start timed out after %1$d s (post-start did not finish, %2$d endpoints)"
+    "value": "Запуск не уложился в %1$d с (post-start не завершился, endpoint'ов: %2$d)"
   },
   "State": {
     "value": "Состояние"
@@ -4919,7 +4919,12 @@
     "value": "Закреплять сессии по"
   },
   "Stop": {
-    "value": "Stop"
+    "value": "Остановить",
+    "special": {
+      "1": {
+        "value": "Stop"
+      }
+    }
   },
   "Stop VPN": {
     "value": "Остановить VPN"
@@ -5083,7 +5088,7 @@
     "value": "Занят другим VPN"
   },
   "Tap START to begin capture. Recording continues when you leave this tab.": {
-    "value": "Нажмите START, чтобы начать запись. Запись продолжится, когда вы уйдёте с этой вкладки."
+    "value": "Нажмите СТАРТ, чтобы начать запись. Запись продолжится, когда вы уйдёте с этой вкладки."
   },
   "Tap Start to begin": {
     "value": "Для запуска нажмите «Начать тест»"
@@ -5947,7 +5952,7 @@
     "value": "≤%d мс"
   },
   "off": {
-    "value": "off"
+    "value": "выкл."
   },
   "Turn on": {
     "value": "Включить"
@@ -7065,5 +7070,14 @@
       "many": "%d сайтов",
       "other": "%d сайта"
     }
+  },
+  "%1$s · idle for %2$d s": {
+    "value": "%1$s · простой %2$d с"
+  },
+  "Direct": {
+    "value": "Напрямую"
+  },
+  "%d h": {
+    "value": "%d ч"
   }
 }
