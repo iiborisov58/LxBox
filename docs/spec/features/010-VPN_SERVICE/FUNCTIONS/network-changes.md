@@ -77,7 +77,7 @@ current interface or its absence.
 - Rule conditions on the Wi-Fi network — [004-ROUTING](../../004-ROUTING/FEATURE.md).
 - A core that does not reach "connected" within the connecting timeout while
   there is no network is stopped by the emergency stop of the Connecting phase —
-  [tunnel-control](tunnel-control.md); the initial reset does not cover it ([720](../../../tasks/720-boot-autostart-initial-reset.md)).
+  [tunnel-control](tunnel-control.md); the initial reset does not cover it ([725](../../../tasks/725-boot-autostart-initial-reset.md)).
 - Depends on OS capabilities: default network events, their order and the
   delay before the interface appears, the screen-on event.
 
@@ -94,4 +94,4 @@ current interface or its absence.
 | 7 | [143-interrupt](../../../tasks/143-interrupt-connections-on-node-switch.md) | Removed 2026-11-01 (§9) | Optional breaking of the group's connections on node change |
 | 8 | [290](../../../tasks/290-automation-node-switch-gaps.md) | — | Choosing the already active node — no break and no reselection |
 | 9 | [340](../../../tasks/340-user-present-rebind-stale-endpoints.md) | v2 (SCREEN_ON) shipped | Screen on → rebind stale WG/AWG |
-| 10 | [720](../../../tasks/720-boot-autostart-initial-reset.md) | Code-complete | One initial reset when the tunnel started before a usable network (auto-start after boot) |
+| 10 | [725](../../../tasks/725-boot-autostart-initial-reset.md) | Code-complete | One initial reset when the tunnel started before a usable network (auto-start after boot) |

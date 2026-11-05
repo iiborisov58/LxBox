@@ -1,8 +1,9 @@
-# 720 — Автозапуск после загрузки: начальный resetNetwork, когда сеть появилась после старта ядра
+# 725 — Автозапуск после загрузки: начальный resetNetwork, когда сеть появилась после старта ядра
 
 | Field | Value |
 |-------|-------|
 | Status | Code-complete (ждёт проверки на устройстве) |
+| Renumbered | 720 → 725 при переносе в форк: номер 720 в upstream занят (`720-awg-masquerade-setting.md`); в сообщениях коммитов осталось «720» |
 | Start date | 2026-11-05 |
 | End date | — |
 | Commits | ветка `fix/boot-autostart-reset`: `fix(vpn): one-shot resetNetwork when tunnel started before usable network (boot race)` + docs |

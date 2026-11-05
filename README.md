@@ -1,3 +1,29 @@
+# Форк L×Box: чем отличается от оригинала
+
+Это личный форк [Leadaxe/LxBox](https://github.com/Leadaxe/LxBox). Всё, что ниже, есть
+только здесь, в ветке `fork-features`; остальной README — без изменений из оригинала.
+
+| Возможность | Где в приложении | Спека |
+|---|---|---|
+| **Помощник подбора доменов.** Домены для правила собираются из записи трафика выбранного приложения (через профайлер), из вставленного текста или из готового `.srs`. Хосты сворачиваются в суффиксы по Public Suffix List, не захватывая общие хостинги (`githubusercontent.com`, `cloudfront.net`). Видно, какое из ваших правил уже ловит домен, и работает ли он напрямую или только через прокси (проверка через ядро). | Маршрутизация → Inline-правило → MATCH → «Подобрать домены» | [724](docs/spec/tasks/724-domain-helper.md) |
+| **Поиск готовых наборов `.srs`.** Поиск по runetfreedom, SagerNet sing-geosite / sing-geoip, MetaCubeX и legiz-ru без похода на GitHub: фильтры по источнику и виду, зеркало GitHub raw или jsDelivr, проверка файла (состав) и проверка «есть ли в нём домен / IP». Список источников — черновик реестра контракта `app/assets/contract_draft/rule_set_sources.json`. | Маршрутизация → Remote (.srs)-правило → RULE-SET URL → «Найти набор правил» | [723](docs/spec/tasks/723-rule-set-finder.md) |
+| **Проверка доступности заблокированных ресурсов.** По желанию (по умолчанию выключено): раз в 5–60 минут через активный туннель открывается выборка ресурсов из списков блокировок; при провале — уведомление, сброс сети или переподключение. События `REACHABILITY_FAILED` / `REACHABILITY_RESTORED` для автоматизации, Debug API `/settings/reachability`, `/action/reachability-check`. | Настройки → Диагностика | [721](docs/spec/tasks/721-blocked-reachability-check.md) |
+| **Автозапуск после загрузки телефона.** Если туннель поднялся раньше, чем появилась рабочая сеть, выполняется один начальный сброс сети — трафик не зависает до ручного переподключения. | — (автоматически) | [725](docs/spec/tasks/725-boot-autostart-initial-reset.md) |
+| **Аудит русской локализации.** Переведены оставшиеся английские строки (кнопки, статусы, подписи), выровнены названия экранов в подсказках. | весь интерфейс | [722](docs/spec/tasks/722-ru-l10n-audit.md) |
+| **Nightly-сборки рядом с основной.** Отдельный applicationId и синяя иконка; release-вариант для повседневного использования и debug для отладки ставятся одновременно с обычной L×Box. | — | — |
+
+Сборка nightly (нужен `app/android/app/libs/libbox.aar`, его кладёт `scripts/fetch-libbox.sh`):
+
+```bash
+cd app
+LXBOX_NIGHTLY=1 LXBOX_ABI_FILTER=arm64-v8a flutter build apk --release  # «L×Box Nightly», id …lxbox.nightly
+LXBOX_NIGHTLY=1 LXBOX_ABI_FILTER=arm64-v8a flutter build apk --debug    # «L×Box Nightly Debug», id …lxbox.nightly.debug
+```
+
+Состояние: код и тесты готовы; на устройстве функции ещё не проверялись.
+
+---
+
 # L×Box — sing-box VPN client for Android
 
 [![GitHub](https://img.shields.io/badge/GitHub-Leadaxe%2FLxBox-blue)](https://github.com/Leadaxe/LxBox)
